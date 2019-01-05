@@ -6,6 +6,22 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://notes.mikejarrett.ca/authors/mike-jarrett.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/authors/roberto-alsina.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/bikes.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/bikeshare.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/blog.xml</loc>
   <lastmod>2019-01-05T22:08:00Z</lastmod>
  </sitemap>
@@ -14,8 +30,20 @@
   <lastmod>2019-01-05T22:08:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/datavis.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/demo.xml</loc>
   <lastmod>2019-01-05T22:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/matplotlib.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/mobi.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/nikola.xml</loc>
@@ -23,22 +51,30 @@
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/python.xml</loc>
-  <lastmod>2019-01-05T22:08:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/science.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/vancouver.xml</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/galleries/demo/rss.xml</loc>
-  <lastmod>2019-01-05T22:37:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/galleries/rss.xml</loc>
-  <lastmod>2019-01-05T22:37:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/rss.xml</loc>
-  <lastmod>2019-01-05T22:08:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/sitemap.xml</loc>
-  <lastmod>2019-01-05T22:37:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
 </sitemapindex>

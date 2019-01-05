@@ -7,19 +7,43 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://notes.mikejarrett.ca/</loc>
-  <lastmod>2019-01-05T22:26:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/2012/</loc>
   <lastmod>2019-01-05T20:40:00Z</lastmod>
  </url>
  <url>
+  <loc>https://notes.mikejarrett.ca/2017/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://notes.mikejarrett.ca/archive.html</loc>
-  <lastmod>2019-01-05T22:37:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/authors/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/authors/mike-jarrett/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/authors/roberto-alsina/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/categories/</loc>
-  <lastmod>2019-01-05T20:40:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/categories/bikes/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/categories/bikeshare/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/categories/blog/</loc>
@@ -30,8 +54,20 @@
   <lastmod>2019-01-05T20:40:00Z</lastmod>
  </url>
  <url>
+  <loc>https://notes.mikejarrett.ca/categories/datavis/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://notes.mikejarrett.ca/categories/demo/</loc>
   <lastmod>2019-01-05T20:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/categories/matplotlib/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/categories/mobi/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/categories/nikola/</loc>
@@ -40,6 +76,14 @@
  <url>
   <loc>https://notes.mikejarrett.ca/categories/python/</loc>
   <lastmod>2019-01-05T20:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/categories/science/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/categories/vancouver/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/galleries/</loc>
@@ -59,7 +103,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/listings/hello.py.html</loc>
-  <lastmod>2019-01-05T22:37:00Z</lastmod>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/pages/about-nikola/</loc>
@@ -116,6 +160,26 @@
  <url>
   <loc>https://notes.mikejarrett.ca/pages/theming/</loc>
   <lastmod>2019-01-05T20:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/posts/2017/04/matplotlib-on-the-web/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/posts/2017/05/140/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/posts/2017/10/machine-learning-with-vancouver-bike-share-data/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/posts/2017/11/mobi-station-activity/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/posts/2017/11/what-really-affects-bikeshare-use-in-vancouver/</loc>
+  <lastmod>2019-01-05T23:09:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/posts/welcome-to-nikola/</loc>
