@@ -35,7 +35,6 @@
 'scale_images:output/images/frontispiece.jpg', (41472, 226)
 'render_sources:output/pages/quickref/index.rst', (41984, 244)
 'render_posts:cache/pages/charts.html', (42496, 349)
-'render_galleries:output/galleries/index.html', (414720, 5204)
 'redirect', (47104, 56)
 'render_posts:cache/pages/theming.html', (47616, 353)
 'copy_assets:output/assets/css/bootblog.css', (48128, 413)
@@ -145,3 +144,4 @@
 'render_listings:output/listings/index.html', (410624, 2863)
 'render_taxonomies:output/archive.html', (420352, 2603)
 'copy_files:output/CNAME', (443904, 230)
+'render_galleries:output/galleries/index.html', (444416, 3518)
