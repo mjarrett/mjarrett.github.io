@@ -1,6 +1,6 @@
 /* Override nikola_ipython.css */
 div.prompt {
-    background-color: #FFFFFF;
+    
     display: none;
 }
 
