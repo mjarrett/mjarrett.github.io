@@ -150,7 +150,7 @@ NAVIGATION_ALT_LINKS = {
 }
 
 # Name of the theme to use.
-THEME = "bootstrap3"
+THEME = "bootblog4"
 #THEME = "bootyper"
 
 # Primary color of your theme. This will be used to customize your theme.
