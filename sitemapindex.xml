@@ -6,14 +6,6 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
-  <loc>https://notes.mikejarrett.ca/authors/mike-jarrett.xml</loc>
-  <lastmod>2019-01-05T23:09:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://notes.mikejarrett.ca/authors/roberto-alsina.xml</loc>
-  <lastmod>2019-01-05T23:09:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/bikes.xml</loc>
   <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
@@ -22,20 +14,8 @@
   <lastmod>2019-01-05T23:09:00Z</lastmod>
  </sitemap>
  <sitemap>
-  <loc>https://notes.mikejarrett.ca/categories/blog.xml</loc>
-  <lastmod>2019-01-05T22:08:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://notes.mikejarrett.ca/categories/cat_nikola.xml</loc>
-  <lastmod>2019-01-05T22:08:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/datavis.xml</loc>
   <lastmod>2019-01-05T23:09:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://notes.mikejarrett.ca/categories/demo.xml</loc>
-  <lastmod>2019-01-05T22:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/matplotlib.xml</loc>
@@ -44,10 +24,6 @@
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/mobi.xml</loc>
   <lastmod>2019-01-05T23:09:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://notes.mikejarrett.ca/categories/nikola.xml</loc>
-  <lastmod>2019-01-05T22:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/python.xml</loc>
@@ -75,6 +51,6 @@
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/sitemap.xml</loc>
-  <lastmod>2019-01-05T23:17:00Z</lastmod>
+  <lastmod>2019-01-05T23:23:00Z</lastmod>
  </sitemap>
 </sitemapindex>
