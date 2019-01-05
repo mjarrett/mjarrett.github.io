@@ -120,7 +120,7 @@
 'render_posts:cache/pages/extending.html', (137216, 598)
 'render_taxonomies:output/rss.xml', (138240, 449)
 'render_pages:output/pages/theming/index.html', (380416, 3681)
-'create_bundles:output/assets/js/all-nocdn.js', (262656, 964)
+'create_bundles:output/assets/js/all-nocdn.js', (262656, 930)
 'create_bundles:output/assets/css/all.css', (240640, 1129)
 'render_posts:cache/pages/quickstart.html', (143872, 362)
 'render_galleries', (144384, 56)
