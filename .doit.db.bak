@@ -144,3 +144,4 @@
 'copy_assets:output/assets/css/bootstrap.min.css.map', (262144, 312)
 'render_listings:output/listings/index.html', (410624, 2863)
 'render_taxonomies:output/archive.html', (420352, 2603)
+'copy_files:output/CNAME', (443904, 230)
