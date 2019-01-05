@@ -1,0 +1,4 @@
+Sitemap: https://notes.mikejarrett.ca/sitemapindex.xml
+
+User-Agent: *
+Host: notes.mikejarrett.ca
