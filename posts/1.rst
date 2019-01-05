@@ -17,6 +17,7 @@ and build a site using it. Congratulations!
 
 Next steps:
 
+* HAHAHA
 * :doc:`Read the manual <handbook>`
 * `Visit the Nikola website to learn more <https://getnikola.com>`__
 * `See a demo photo gallery <link://gallery/demo>`__
