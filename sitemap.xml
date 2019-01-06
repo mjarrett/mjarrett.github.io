@@ -7,11 +7,15 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://notes.mikejarrett.ca/</loc>
-  <lastmod>2019-01-05T23:29:00Z</lastmod>
+  <lastmod>2019-01-06T04:23:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/2017/</loc>
   <lastmod>2019-01-05T23:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/2018/</loc>
+  <lastmod>2019-01-06T04:23:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/2019/</loc>
@@ -19,7 +23,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/archive.html</loc>
-  <lastmod>2019-01-06T04:12:00Z</lastmod>
+  <lastmod>2019-01-06T04:27:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/categories/</loc>
@@ -155,7 +159,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/posts/mapping-googles-location-history-in-python/</loc>
-  <lastmod>2019-01-06T04:19:00Z</lastmod>
+  <lastmod>2019-01-06T04:21:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/posts/mountain-view-cemetary-open-data/</loc>
