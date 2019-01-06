@@ -20,7 +20,7 @@
 <meta property="og:description" content="I came across a problem recently where I wanted to store metadata about each column in a pandas DataFrame. This could be done easily enough with a simple dictionary where each column name is a key, bu">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2018-04-05T20:12:42-08:00">
-<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script><script src="../../assets/js/bootyper.js"></script>
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -101,29 +101,30 @@
 
 <script>
 
-console.log(code_show);
+//console.log(code_show);
+//
+//if (typeof code_show == 'undefined') {
+//    code_show = true
+//  } else {
+//    code_show = false
+//    }
+//
+//console.log(code_show);
 
-if (typeof code_show == 'undefined') {
-    code_show = true
-  } else {
-    code_show = false
-    }
 
-console.log(code_show);
-
-
-function code_toggle() {
-    console.log('code_toggle');
-    console.log(code_show);	
-
- if (!code_show){
- $('div.input').hide();
- $('div.prompt.output_prompt').hide();
- } else {
- $('div.input').show();
- }
- code_show = !code_show
-}
+//function code_toggle() {
+//    console.log('code_toggle');
+//    console.log(code_show);	
+//
+// if (!code_show){
+// $('div.input').hide();
+// $('div.prompt.output_prompt').hide();
+// } else {
+// $('div.input').show();
+// }
+// code_show = !code_show
+//}
+$( document ).ready(toggle_setup);
 $( document ).ready(code_toggle);
 </script><form id="toggle-button" action="javascript:code_toggle()"><input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."></form>
     </div>
