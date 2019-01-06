@@ -13,7 +13,7 @@
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
 <link rel="canonical" href="https://notes.mikejarrett.ca/">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/mapping-googles-location-history-in-python/" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/storing-metadata-in-pandas-dataframes/" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -66,7 +66,922 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/mapping-googles-location-history-in-python/" class="u-url">Mapping Google's Location History in Python</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/storing-metadata-in-pandas-dataframes/" class="u-url">Storing metadata in Pandas DataFrames</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Mike Jarrett
+            </span></p>
+            <p class="dateline">
+            <a href="posts/storing-metadata-in-pandas-dataframes/" rel="bookmark">
+            <time class="published dt-published" datetime="2019-01-05T20:12:42-08:00" itemprop="datePublished" title="2019-01-05 20:12">2019-01-05 20:12</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="posts/storing-metadata-in-pandas-dataframes/#disqus_thread" data-disqus-identifier="cache/posts/storing-metadata-in-pandas-dataframes.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I came across a problem recently where I wanted to store metadata about each column in a pandas DataFrame. This could be done easily enough with a simple dictionary where each column name is a key, but I was hoping for something that would propogate with a DataFrame as it's sliced, copied, expanded, etc, without having to explicitely keep track of the metadata in my scripts.</p>
+<p>My solution is to use the pandas MultiIndex. In this post I'll discuss the pros and cons of this approach, show some examples, a show how I've subclassed the pandas DataFrame to make this approach easier.</p>
+<!-- TEASER_END-->
+
+<h3 id="The-Pandas-MultiIndex">The Pandas MultiIndex<a class="anchor-link" href="posts/storing-metadata-in-pandas-dataframes/#The-Pandas-MultiIndex">¶</a>
+</h3>
+<p>In my usage case, I want each column to carry three pieces of metadata: a field name, a field width, and a field description. The field name is a short unique label, the width is an integer that describes the number of characters the field will occupy when saved to a flat file, and the description is a longer string explaining the field.</p>
+<p>To start, I'll build a simple dataframe with these attributes.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({(</span><span class="s1">'A'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'desc A'</span><span class="p">):[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],(</span><span class="s1">'B'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'desc B'</span><span class="p">):[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]})</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">'NAME'</span><span class="p">,</span><span class="s1">'LENGTH'</span><span class="p">,</span><span class="s1">'DESCRIPTION'</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[3]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr>
+<th>NAME</th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+<tr>
+<th>LENGTH</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+<tr>
+<th>DESCRIPTION</th>
+      <th>desc A</th>
+      <th>desc B</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>1</td>
+      <td>4</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now I have a DataFrame with 2 columns, with three levels to each column name: <code>NAME</code>, <code>LENGTH</code> and <code>DESCRIPTION</code>. Each column can be uniquely identified by a tuple with the three levels:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[(</span><span class="s1">'A'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'desc A'</span><span class="p">)]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[4]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    1
+1    2
+2    3
+Name: (A, 1, desc A), dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above returns a pandas Series, the 1D foundation of the DataFrame.</p>
+<p>I can also call a column with only the top level label:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'A'</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[5]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr>
+<th>LENGTH</th>
+      <th>1</th>
+    </tr>
+<tr>
+<th>DESCRIPTION</th>
+      <th>desc A</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>1</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>2</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>3</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This, however, returns a DataFrame, and that's a problem for me. There are methods available to Series that aren't available to single-column DataFrames, so this breaks the natural Pandas workflow. I'd like to refer to a column only by the <code>NAME</code> level of the MultiIndex and have it behave as if the column labels only had a single level. This isn't at all the usage that the pandas designers expected when they defined the MultiIndex.</p>
+<p>With plain pandas I'm stuck now: to refer to a column I'd need to pass the tuple with the full metadata, which is too anoying. I could also write a helper function that returns a tuple if given a <code>NAME</code> string, but this is still a lot of extra typing and makes my code basically unreadable to someone who is used to pandas but doesn't understand my personal workflow.</p>
+<h3 id="Subclassing">Subclassing<a class="anchor-link" href="posts/storing-metadata-in-pandas-dataframes/#Subclassing">¶</a>
+</h3>
+<p>The answer is to subclass the pandas DataFrame and override the indexing operator so that in certain cases a dataframe with a MultiIndex can have columns called only by a single level label.</p>
+<p>In order not to loose the normal MultiIndex functionality, I require that one of the column levels is called <code>NAME</code> and that labels on this level are unique. If there is a MultiIndex without a <code>NAME</code> level, standard Pandas behaviour is defaulted to.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">MetaDataFrame</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+
+    <span class="nd">@property</span>  <span class="c1"># Required so that our new class returns an instance of itself</span>
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MetaDataFrame</span>        
+        
+
+    <span class="c1"># __getitem__ is the special method called by the indexing operator</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        
+        <span class="c1"># Check whether the current instance is using a MultiIndex,</span>
+        <span class="c1"># there is a level called NAME, and the input key is a string</span>
+        <span class="c1"># (not a list)</span>
+        <span class="n">is_mi_columns</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_mi_columns</span> <span class="ow">and</span> <span class="s1">'NAME'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">==</span><span class="nb">str</span><span class="p">:</span>
+            
+            <span class="c1"># get the full tuple corresponding to the specified key</span>
+            <span class="n">tupkey</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">key</span><span class="p">]</span>
+            
+            <span class="c1"># Check that the key is unique. If it is, set 'key' to the tuple</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tupkey</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">tupkey</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># If it's not unique, raise and error</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">tupkey</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'NAME level column labels must be unique'</span><span class="p">)</span>
+
+        <span class="c1"># Now if the above conditions are met, 'key' is the tuple, or</span>
+        <span class="c1"># else 'key' is unchanged. Either way, we pass the key</span>
+        <span class="c1"># to the __getitem__ method of the parent class</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's make the same dataframe as before, but using the new MetaDataFrame class.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mdf</span> <span class="o">=</span> <span class="n">MetaDataFrame</span><span class="p">({(</span><span class="s1">'A'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'desc A'</span><span class="p">):[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],(</span><span class="s1">'B'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'desc B'</span><span class="p">):[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]})</span>
+<span class="n">mdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">'NAME'</span><span class="p">,</span><span class="s1">'LENGTH'</span><span class="p">,</span><span class="s1">'DESCRIPTION'</span><span class="p">]</span>
+<span class="n">mdf</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[7]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr>
+<th>NAME</th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+<tr>
+<th>LENGTH</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+<tr>
+<th>DESCRIPTION</th>
+      <th>desc A</th>
+      <th>desc B</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>1</td>
+      <td>4</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Calling the dataframe by a NAME level label now returns a Series, as if we weren't using a MultiIndex.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mdf</span><span class="p">[</span><span class="s1">'A'</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[8]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    1
+1    2
+2    3
+Name: (A, 1, desc A), dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If I pass anything other than a string corresponding to a NAME level label, it defaults to the normal DataFrame behavious.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mdf</span><span class="p">[[</span><span class="s1">'A'</span><span class="p">,</span><span class="s1">'B'</span><span class="p">]]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[9]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr>
+<th>NAME</th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+<tr>
+<th>LENGTH</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+<tr>
+<th>DESCRIPTION</th>
+      <th>desc A</th>
+      <th>desc B</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>1</td>
+      <td>4</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mdf</span><span class="p">[(</span><span class="s1">'A'</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[10]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead><tr style="text-align: right;">
+<th>DESCRIPTION</th>
+      <th>desc A</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>1</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>2</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>3</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">mdf</span><span class="p">[</span><span class="s1">'desc A'</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Key not found'</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Key not found
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are other benefits to these changes to <code>__getitem__</code>. For example, when performing a merge between two dataframes I only need to specify the NAME level labels to merge on, instead of the full tuple as you would with the default class.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mdf2</span> <span class="o">=</span> <span class="n">MetaDataFrame</span><span class="p">({(</span><span class="s1">'A'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'desc A'</span><span class="p">):[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],(</span><span class="s1">'C'</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">'desc C'</span><span class="p">):[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]})</span>
+<span class="n">mdf2</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">'NAME'</span><span class="p">,</span><span class="s1">'LENGTH'</span><span class="p">,</span><span class="s1">'DESCRIPTION'</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">mdf</span><span class="p">,</span><span class="n">mdf2</span><span class="p">,</span><span class="n">left_on</span><span class="o">=</span><span class="s1">'A'</span><span class="p">,</span><span class="n">right_on</span><span class="o">=</span><span class="s1">'A'</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">'inner'</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[13]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr>
+<th>NAME</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+<tr>
+<th>LENGTH</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+<tr>
+<th>DESCRIPTION</th>
+      <th>desc A</th>
+      <th>desc B</th>
+      <th>desc C</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>1</td>
+      <td>4</td>
+      <td>7</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>2</td>
+      <td>5</td>
+      <td>8</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>3</td>
+      <td>6</td>
+      <td>9</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Subclassing-further...">Subclassing further...<a class="anchor-link" href="posts/storing-metadata-in-pandas-dataframes/#Subclassing-further...">¶</a>
+</h2>
+<p>In my useage case, the metadata is useless to me until I'm saving the file. I want to clean up how the dataframes are displayed so that all that extra information isn't printed out every time, so I'll override the <code>__unicode__</code> method. (This applies to Python3. In Python2, you want the <code>__str__</code> method). Here I basically tell the dataframe that in my specific usage case (MultiIndex with a NAME level) to display a version of the dataframe with a single level column index.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">MetaDataFrame</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+
+    <span class="nd">@property</span>  
+    <span class="k">def</span> <span class="nf">_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MetaDataFrame</span>        
+        
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">is_mi_columns</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_mi_columns</span> <span class="ow">and</span> <span class="s1">'NAME'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">==</span><span class="nb">str</span><span class="p">:</span>
+            <span class="n">tupkey</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tupkey</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">tupkey</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">tupkey</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'NAME level column labels must be unique'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">is_mi_columns</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_mi_columns</span> <span class="ow">and</span> <span class="s1">'NAME'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+
+            <span class="n">newdf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">newdf</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">'NAME'</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">newdf</span><span class="o">.</span><span class="n">__unicode__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__unicode__</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">is_mi_columns</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_mi_columns</span> <span class="ow">and</span> <span class="s1">'NAME'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+
+            <span class="n">newdf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">newdf</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">'NAME'</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">newdf</span><span class="o">.</span><span class="n">_repr_html_</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_repr_html_</span><span class="p">()</span>        
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mdf3</span> <span class="o">=</span> <span class="n">MetaDataFrame</span><span class="p">({(</span><span class="s1">'A'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'desc A'</span><span class="p">):[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],(</span><span class="s1">'B'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'desc B'</span><span class="p">):[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]})</span>
+<span class="n">mdf3</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">'NAME'</span><span class="p">,</span><span class="s1">'LENGTH'</span><span class="p">,</span><span class="s1">'DESCRIPTION'</span><span class="p">]</span>
+<span class="n">mdf3</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[15]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead><tr style="text-align: right;">
+<th>NAME</th>
+      <th>A</th>
+      <th>B</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>1</td>
+      <td>4</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that I do the same for both the <code>__unicode__</code> and <code>_repr_html_</code> methods. The former is the case I'm most interested since I'm usually working in a terminal, while the later defines how to format a DataFrame to html which is primarily used for Jupyter notebooks (like this blogpost). There's lots of great information on further formating DataFrames on the <a href="https://pandas.pydata.org/pandas-docs/stable/style.html">Pandas website</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At this point, you can write functions to generate a MetaDataFrame, manipulate it with all the great Pandas functionality, and always have access to your metadata. In my case, I use the metadata for formatting the text file that I save my DataFrame to as well as generating a layout file that describes the fields.</p>
+
+</div>
+</div>
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/mapping-googles-location-history-in-python/" class="u-url">Mapping Google's Location History in Python</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Mike Jarrett
@@ -3774,7 +4689,7 @@ The coefficients associated with the days of the week can be interpreted as the 
 <p>These are Anderson &amp; 2nd (Granville Island); Aquatic Centre; Coal Harbour Community Centre; and  Davie &amp; Beach. All seawall stations at major destinations. So all the outlier stations are stations that we wouldn't expect to show regular commuter patterns, but more tourist-style activity.</p>
 <p>I was hoping to see different clusters to represent residential area stations vs employment area stations, but these don't show up. Not terribly surprising since the Mobi stations cover an area of the city where there is fairly dense residential development almost everywhere. This fits with our maps of station activity, where we saw that there were no major difference between bikes taken and bikes returned at each station.</p>
 <p><em>All the source code used for data acquisition and analysis in this post is available on my <a href="https://github.com/mjarrett/mobi">github page</a>.</em></p>
-<p><em>To see more posts like this, follow me on twitter <a href="https://twitter.com/bigjarrett">@bigjarrett</a>.</em></p>
+<p><em>To see more posts like this, follow me on twitter <a href="https://twitter.com/mikejarrett_">@mikejarrett_</a>.</em></p>
 </div>
     </div>
     </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/2017/10/machine-learning-with-vancouver-bike-share-data/" class="u-url">Machine learning with Vancouver bike share data</a></h1>

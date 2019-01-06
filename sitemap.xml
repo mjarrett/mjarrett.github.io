@@ -19,7 +19,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/archive.html</loc>
-  <lastmod>2019-01-06T03:15:00Z</lastmod>
+  <lastmod>2019-01-06T04:12:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/categories/</loc>
@@ -160,5 +160,9 @@
  <url>
   <loc>https://notes.mikejarrett.ca/posts/mountain-view-cemetary-open-data/</loc>
   <lastmod>2019-01-05T23:29:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/posts/storing-metadata-in-pandas-dataframes/</loc>
+  <lastmod>2019-01-06T04:12:00Z</lastmod>
  </url>
 </urlset>
