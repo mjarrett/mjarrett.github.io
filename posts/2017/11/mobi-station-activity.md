@@ -36,4 +36,4 @@ I was hoping to see different clusters to represent residential area stations vs
 
 <em>All the source code used for data acquisition and analysis in this post is available on my <a href="https://github.com/mjarrett/mobi">github page</a>.</em>
 
-<em>To see more posts like this, follow me on twitter <a href="https://twitter.com/bigjarrett">@bigjarrett</a>.</em></p></body></html>
+<em>To see more posts like this, follow me on twitter <a href="https://twitter.com/mikejarrett_">@mikejarrett_</a>.</em></p></body></html>
