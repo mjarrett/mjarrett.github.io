@@ -140,7 +140,7 @@ $( document ).ready(code_toggle);
 <p>My solution is to use the pandas MultiIndex. In this post I'll discuss the pros and cons of this approach, show some examples, a show how I've subclassed the pandas DataFrame to make this approach easier.</p>
 <!-- TEASER_END-->
 
-<h3 id="The-Pandas-MultiIndex">The Pandas MultiIndex<a class="anchor-link" href="#The-Pandas-MultiIndex">¶</a>
+<script>code_toggle = false</script><h3 id="The-Pandas-MultiIndex">The Pandas MultiIndex<a class="anchor-link" href="#The-Pandas-MultiIndex">¶</a>
 </h3>
 <p>In my usage case, I want each column to carry three pieces of metadata: a field name, a field width, and a field description. The field name is a short unique label, the width is an integer that describes the number of characters the field will occupy when saved to a flat file, and the description is a longer string explaining the field.</p>
 <p>To start, I'll build a simple dataframe with these attributes.</p>
