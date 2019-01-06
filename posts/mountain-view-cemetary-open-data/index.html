@@ -14,12 +14,14 @@
 <link rel="canonical" href="https://notes.mikejarrett.ca/posts/mountain-view-cemetary-open-data/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Mike Jarrett">
 <link rel="prev" href="../2017/11/what-really-affects-bikeshare-use-in-vancouver/" title="What really affects bikeshare use in Vancouver?" type="text/html">
+<link rel="next" href="../mapping-googles-location-history-in-python/" title="Mapping Google's Location History in Python" type="text/html">
 <meta property="og:site_name" content="Mike Jarrett">
 <meta property="og:title" content="Mountain View Cemetary Open Data">
 <meta property="og:url" content="https://notes.mikejarrett.ca/posts/mountain-view-cemetary-open-data/">
 <meta property="og:description" content="Mountain View Cemetary Open Data¶One of my goals this year is to turn everything interesting I learn into a blog post. I've been using Vancouver's open data to find datasets to play around with, and t">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2019-01-05T15:29:02-08:00">
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -95,26 +97,36 @@
         
 
     </header><div>
-<script>
 
+<script type="text/javascript">
+    code_show = false
+</script><script>
+
+console.log(code_show);
 
 if (typeof code_show == 'undefined') {
     code_show = true
-    } else {
+  } else {
     code_show = false
     }
+
+console.log(code_show);
+
+
 function code_toggle() {
-        
+    console.log('code_toggle');
+    console.log(code_show);	
 
  if (!code_show){
  $('div.input').hide();
+ $('div.prompt.output_prompt').hide();
  } else {
  $('div.input').show();
  }
  code_show = !code_show
 }
 $( document ).ready(code_toggle);
-</script><form action="javascript:code_toggle()"><input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."></form>
+</script><form id="toggle-button" action="javascript:code_toggle()"><input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."></form>
     </div>
     
 
@@ -2840,6 +2852,9 @@ if (IPython.notebook.kernel != null) {
     <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="previous">
                 <a href="../2017/11/what-really-affects-bikeshare-use-in-vancouver/" rel="prev" title="What really affects bikeshare use in Vancouver?">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../mapping-googles-location-history-in-python/" rel="next" title="Mapping Google's Location History in Python">Next post</a>
             </li>
         </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         
