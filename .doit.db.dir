@@ -127,7 +127,7 @@
 'render_pages:output/pages/about-nikola/index.html', (344576, 3634)
 'create_bundles:output/assets/js/all.js', (448000, 531)
 'render_taxonomies:output/categories/nikola.xml', (154624, 449)
-'render_taxonomies:output/index.html', (758784, 11617)
+'render_taxonomies:output/index.html', (758784, 11616)
 'copy_assets:output/assets/js/fancydates.js', (160768, 402)
 'copy_assets:output/assets/css/lanyon.css', (192000, 281)
 'copy_assets:output/assets/css/poole.css', (256000, 278)
