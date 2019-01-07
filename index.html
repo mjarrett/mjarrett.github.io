@@ -13,7 +13,7 @@
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
 <link rel="canonical" href="https://notes.mikejarrett.ca/">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/storing-metadata-in-pandas-dataframes/" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/how-vancouver-uses-mobi-bikes/" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -66,7 +66,37 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/storing-metadata-in-pandas-dataframes/" class="u-url">Storing metadata in Pandas DataFrames</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/how-vancouver-uses-mobi-bikes/" class="u-url">How Vancouver Uses Mobi Bikes</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Mike Jarrett
+            </span></p>
+            <p class="dateline">
+            <a href="posts/how-vancouver-uses-mobi-bikes/" rel="bookmark">
+            <time class="published dt-published" datetime="2019-01-06T18:27:37-08:00" itemprop="datePublished" title="2019-01-06 18:27">2019-01-06 18:27</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="posts/how-vancouver-uses-mobi-bikes/#disqus_thread" data-disqus-identifier="cache/posts/how-vancouver-uses-mobi-bikes.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Vancouver's Mobi bikeshare system has been up and running for over 2 years now, and with two full summers of activity it's time to take a look at how exactly Vancouverites are using their bikeshare system.</p>
+<p>For over a year, I've been collecting real-time data about Mobi bike trips by monitoring public information about the number of bikes at each station and inferring trip activity based on changes to the number of bikes at each station. This has led to some fun uses: I have live figures updating constantly on <a href="posts/how-vancouver-uses-mobi-bikes/data.mikejarrett.ca/mobi">my website</a>, a twitter bot tweets out daily stats at <a href="posts/how-vancouver-uses-mobi-bikes/twitter.com/VanBikeShareBot">@VanBikeShareBot</a>, and a few <a href="http://notes.mikejarrett.ca/categories/mobi/">blog posts</a>.</p>
+<p>As handy as those live trip estimates are, they're very much estimates and only give us information about how often certain stations are used. Luckily, Mobi has started publishing open <a href="https://www.mobibikes.ca/en/system-data">system data</a>. This data set gives us a registry of every Mobi bikeshare trip since the beginning of 2017, current to the end of 2018 as of this writing. With this we have access to trip start and endpoints, trip duration and distance, membership type and more. In this post, I'll summarize some of the things I've learned after spending some time looking into this data.</p>
+<p class="more"><a href="posts/how-vancouver-uses-mobi-bikes/">Read more…</a></p>
+</div>
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/storing-metadata-in-pandas-dataframes/" class="u-url">Storing metadata in Pandas DataFrames</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Mike Jarrett
