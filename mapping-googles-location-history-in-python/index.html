@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapping Google's Location History in Python | Mike Jarrett</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/bootyper.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
+<link rel="canonical" href="https://notes.mikejarrett.ca/mapping-googles-location-history-in-python/">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="author" content="Mike Jarrett">
+<link rel="prev" href="../what-really-affects-bikeshare-use-in-vancouver/" title="What really affects bikeshare use in Vancouver?" type="text/html">
+<link rel="next" href="../mountain-view-cemetary-open-data/" title="Mountain View Cemetary Open Data" type="text/html">
+<meta property="og:site_name" content="Mike Jarrett">
+<meta property="og:title" content="Mapping Google's Location History in Python">
+<meta property="og:url" content="https://notes.mikejarrett.ca/mapping-googles-location-history-in-python/">
+<meta property="og:description" content='If you have an Android phone, Google is tracking your location. If you have "Location History" turned on in your settings, Google is really tracking your location. If you have this setting turned off,'>
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2018-01-05T19:45:54-08:00">
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script><script src="../assets/js/bootyper.js"></script>
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://notes.mikejarrett.ca/">
+
+                <span id="blog-title">Mike Jarrett</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../categories/">Tags</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.ipynb" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Mapping Google's Location History in Python</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Mike Jarrett
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2018-01-05T19:45:54-08:00" itemprop="datePublished" title="2018-01-05 19:45">2018-01-05 19:45</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/mapping-googles-location-history-in-python.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.ipynb" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div>
+
+
+
+<script>
+
+//console.log(code_show);
+//
+//if (typeof code_show == 'undefined') {
+//    code_show = true
+//  } else {
+//    code_show = false
+//    }
+//
+//console.log(code_show);
+
+
+//function code_toggle() {
+//    console.log('code_toggle');
+//    console.log(code_show);	
+//
+// if (!code_show){
+// $('div.input').hide();
+// $('div.prompt.output_prompt').hide();
+// } else {
+// $('div.input').show();
+// }
+// code_show = !code_show
+//}
+$( document ).ready(toggle_setup);
+$( document ).ready(code_toggle);
+</script><form id="toggle-button" action="javascript:code_toggle()"><input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."></form>
+    </div>
+    
+
+    <div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you have an Android phone, Google is tracking your location. If you have "Location History" turned on in your settings, Google is <em>really</em> tracking your location. If you have this setting turned off, Google will still record your location when an app that has proper permission (like Google Maps or Strava) requests your location. This is creepy and probably bad from a privacy standpoint, but it's cool and fun from a data and visualisation standpoint. In the interest of blog content, I've let google track my location since I got my new phone ~1.5 years ago and it's now time to look at the data.</p>
+<p>Google offers ways to look at your location history through their apps, but it's more fun to do it myself. Through myaccount.google.com, you can create an archive of your personal information being stored by Google. You can pick which services you're interested in, but for now I'm just looking for my location history data. It takes some time for Google to create the archive and make it available for download.</p>
+<!-- TEASER_END-->
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Loading-the-location-data">Loading the location data<a class="anchor-link" href="#Loading-the-location-data">¶</a>
+</h3>
+<p>You location history is stored as a JSON file, so I used the Pandas json tools to convert the file into an dataframe.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> notebook
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'Location_History.json'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'locations'</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[2]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead><tr style="text-align: right;">
+<th></th>
+      <th>accuracy</th>
+      <th>activity</th>
+      <th>altitude</th>
+      <th>heading</th>
+      <th>latitudeE7</th>
+      <th>longitudeE7</th>
+      <th>timestampMs</th>
+      <th>velocity</th>
+      <th>verticalAccuracy</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th>0</th>
+      <td>21</td>
+      <td>[{'timestampMs': '1517286457815', 'activity': ...</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606672</td>
+      <td>-1231422941</td>
+      <td>1517285588681</td>
+      <td>NaN</td>
+      <td>2.0</td>
+    </tr>
+<tr>
+<th>1</th>
+      <td>21</td>
+      <td>[{'timestampMs': '1517285436401', 'activity': ...</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606407</td>
+      <td>-1231422879</td>
+      <td>1517285308941</td>
+      <td>NaN</td>
+      <td>2.0</td>
+    </tr>
+<tr>
+<th>2</th>
+      <td>21</td>
+      <td>NaN</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606330</td>
+      <td>-1231422958</td>
+      <td>1517285168226</td>
+      <td>NaN</td>
+      <td>2.0</td>
+    </tr>
+<tr>
+<th>3</th>
+      <td>21</td>
+      <td>NaN</td>
+      <td>44.0</td>
+      <td>NaN</td>
+      <td>492606220</td>
+      <td>-1231423005</td>
+      <td>1517285099258</td>
+      <td>NaN</td>
+      <td>4.0</td>
+    </tr>
+<tr>
+<th>4</th>
+      <td>22</td>
+      <td>NaN</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606435</td>
+      <td>-1231423034</td>
+      <td>1517284956658</td>
+      <td>NaN</td>
+      <td>2.0</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Looks good, but some things need to be cleaned up. I need to pull the time value out of the "activity" column and convert it from unix time to a date, and convert latitude and longitude to degrees. I also notice that there's some timepoints with lat and long both zero, so I'll drop those rows.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'timems'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'activity'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'timestampMs'</span><span class="p">],</span><span class="n">na_action</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'timems'</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s1">'ms'</span><span class="p">)</span>
+
+
+<span class="n">df</span><span class="p">[</span><span class="s1">'latitude'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'latitudeE7'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">/</span><span class="mi">10000000</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'longitude'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'longitudeE7'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">/</span><span class="mi">10000000</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">latitude</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'time'</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[4]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+      <th>accuracy</th>
+      <th>activity</th>
+      <th>altitude</th>
+      <th>heading</th>
+      <th>latitudeE7</th>
+      <th>longitudeE7</th>
+      <th>timestampMs</th>
+      <th>velocity</th>
+      <th>verticalAccuracy</th>
+      <th>timems</th>
+      <th>latitude</th>
+      <th>longitude</th>
+    </tr>
+<tr>
+<th>time</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+<th>2018-01-30 04:27:37.815</th>
+      <td>21</td>
+      <td>[{'timestampMs': '1517286457815', 'activity': ...</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606672</td>
+      <td>-1231422941</td>
+      <td>1517285588681</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>1517286457815</td>
+      <td>49.260667</td>
+      <td>-123.142294</td>
+    </tr>
+<tr>
+<th>2018-01-30 04:10:36.401</th>
+      <td>21</td>
+      <td>[{'timestampMs': '1517285436401', 'activity': ...</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606407</td>
+      <td>-1231422879</td>
+      <td>1517285308941</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>1517285436401</td>
+      <td>49.260641</td>
+      <td>-123.142288</td>
+    </tr>
+<tr>
+<th>NaT</th>
+      <td>21</td>
+      <td>NaN</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606330</td>
+      <td>-1231422958</td>
+      <td>1517285168226</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>49.260633</td>
+      <td>-123.142296</td>
+    </tr>
+<tr>
+<th>NaT</th>
+      <td>21</td>
+      <td>NaN</td>
+      <td>44.0</td>
+      <td>NaN</td>
+      <td>492606220</td>
+      <td>-1231423005</td>
+      <td>1517285099258</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>NaN</td>
+      <td>49.260622</td>
+      <td>-123.142301</td>
+    </tr>
+<tr>
+<th>NaT</th>
+      <td>22</td>
+      <td>NaN</td>
+      <td>43.0</td>
+      <td>NaN</td>
+      <td>492606435</td>
+      <td>-1231423034</td>
+      <td>1517284956658</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>49.260644</td>
+      <td>-123.142303</td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Plotting-with-Cartopy">Plotting with Cartopy<a class="anchor-link" href="#Plotting-with-Cartopy">¶</a>
+</h3>
+<p>Cartopy brings GIS functionality with Python and Matplotlib. It's pretty easy to play around with. There's various ways to visualize location data with cartopy. In this example, I'll use image tiles and plot my location on top of them. I also played around with using shapefiles to plot regional boundaries and roads instead of using map tiles, but I found that for the range of locations I wanted to use that was getting too complicated. If I was just mapping in Vancouver, for example, I would probably use local shapefiles for a nice clean map. In this case, the only external shapefile that I'll use is the <a href="http://www.naturalearthdata.com/features/">Natural Earth</a> file of populated places, which gives us coordinates and population (and other information) for cities around the world.</p>
+<p>For easy plotting, I'll write a function that takes as input our dataframe, a date we're interested, and the list of Natural Earth populated places. The function will compute the geographical area we need to plot for that day, the cities we need to plot in that area, and plot the cities and location points. It will then return a matplotlib figure that we can display or save.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">import</span> <span class="nn">cartopy.io.shapereader</span> <span class="k">as</span> <span class="nn">shpreader</span>
+<span class="kn">import</span> <span class="nn">cartopy.io.img_tiles</span> <span class="k">as</span> <span class="nn">cimgt</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pprecords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">shpreader</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="s1">'/Users/msj/Dropbox/urban/maps/ne_10m_populated_places.shp'</span><span class="p">)</span><span class="o">.</span><span class="n">records</span><span class="p">())</span>
+<span class="n">ppshapes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">shpreader</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="s1">'/Users/msj/Dropbox/urban/maps/ne_10m_populated_places.shp'</span><span class="p">)</span><span class="o">.</span><span class="n">geometries</span><span class="p">())</span>
+<span class="c1"># zip the shapes and records together, sorted by population</span>
+<span class="n">ppdata</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">pprecords</span><span class="p">,</span><span class="n">ppshapes</span><span class="p">)),</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">'POP2015'</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">make_map</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">day</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ppdata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">extent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="c1"># Get latitudes and longitudes from dataframe</span>
+    <span class="n">longs</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">day</span><span class="p">,</span><span class="s1">'longitude'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">day</span><span class="p">,</span><span class="s1">'latitude'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+        
+    <span class="c1"># Create a Stamen Terrain instance.</span>
+    <span class="n">stamen_terrain</span> <span class="o">=</span> <span class="n">cimgt</span><span class="o">.</span><span class="n">StamenTerrain</span><span class="p">()</span>    
+        
+    <span class="c1"># Create a GeoAxes in the tile's projection.</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">stamen_terrain</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+
+    <span class="c1"># Limit the extent of the map to a suitable longitude/latitude </span>
+    <span class="c1"># range for the given day.</span>
+    <span class="n">xr</span> <span class="o">=</span> <span class="n">longs</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">longs</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="nb">abs</span><span class="p">(</span><span class="n">longs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">longs</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="n">yr</span> <span class="o">=</span> <span class="n">lats</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">lats</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="nb">abs</span><span class="p">(</span><span class="n">lats</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">lats</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xr</span><span class="p">,</span><span class="n">yr</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">1.1</span> <span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">xm</span> <span class="o">=</span> <span class="p">(</span><span class="n">longs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">longs</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">ym</span> <span class="o">=</span> <span class="p">(</span><span class="n">lats</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">lats</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">/</span><span class="mi">2</span>
+
+    
+    <span class="k">if</span> <span class="n">extent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">xm</span><span class="o">-</span><span class="n">r</span><span class="p">,</span> <span class="n">xm</span><span class="o">+</span><span class="n">r</span><span class="p">,</span> <span class="n">ym</span><span class="o">-</span><span class="n">r</span><span class="p">,</span> <span class="n">ym</span><span class="o">+</span><span class="n">r</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+    
+
+    <span class="c1"># Add the Stamen data</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">:</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">5</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">11</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">stamen_terrain</span><span class="p">,</span> <span class="n">zoom</span><span class="p">)</span>
+    
+
+    
+    <span class="c1"># Plot route</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">longs</span><span class="p">,</span><span class="n">lats</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">'#1a9c99'</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">(),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">longs</span><span class="p">,</span><span class="n">lats</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">(),</span><span class="n">s</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+  
+
+
+    <span class="c1"># Plot cities</span>
+    <span class="k">if</span> <span class="n">ppdata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="c1"># Filter to cities in range we're plotting</span>
+        <span class="n">ppdata</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ppdata</span> <span class="k">if</span> <span class="p">(</span><span class="n">xm</span><span class="o">-</span><span class="n">r</span><span class="o">&lt;</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">xm</span><span class="o">+</span><span class="n">r</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ym</span><span class="o">-</span><span class="n">r</span><span class="o">&lt;</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">ym</span><span class="o">+</span><span class="n">r</span><span class="p">)]</span>
+
+        <span class="c1"># Take only top 10 most populated cities in range</span>
+        <span class="n">ppdata</span> <span class="o">=</span> <span class="n">ppdata</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ppdata</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">ppxy</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">ppdata</span><span class="p">]</span>
+            <span class="n">ppx</span><span class="p">,</span><span class="n">ppy</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">ppxy</span><span class="p">)</span>
+            <span class="n">ppnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">'NAME'</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ppdata</span><span class="p">]</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ppx</span><span class="p">,</span><span class="n">ppy</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">'#ffa263'</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ppnames</span><span class="p">):</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">ppx</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">ppy</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">ppnames</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                        <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">(),</span>
+                        <span class="n">clip_on</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+    
+    
+    <span class="c1"># Add the date to the bottom corner of the figure</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s1">'facecolor'</span><span class="p">:</span><span class="s1">'white'</span><span class="p">,</span><span class="s1">'pad'</span><span class="p">:</span><span class="mi">5</span><span class="p">})</span>
+        
+    
+    <span class="k">return</span> <span class="n">f</span><span class="p">,</span><span class="n">ax</span>
+
+    
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now I can plot my location history for a given day. On this day, I was running all over the city getting ready for our trip to the US Southwest.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="s1">'2017-09-08'</span><span class="p">,</span><span class="n">ppdata</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../images/2017-09-08.png" alt=""></p>
+<p>I want an image for each day, so I'll automate this by making a list of days in the dataframe and then looping over the days and making and saving a map for each day.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">days</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">))),</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">days</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">days</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">ppdata</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'images/</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">day</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>(This can take a while if you have a lot of days to process -- cartopy will need to download the necessary image tiles for each day)</p>
+<p>I found I needed to clean up a couple maps, where Google thought I was 1000s of kilometers away from where I actually was. This is easy enough to do by filtering the dataframe before passing it to the function. This seems to happen on days when I'm flying, I think connecting to airport wifi networks confuses Google.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">day</span> <span class="o">=</span> <span class="s1">'2017-04-23'</span>
+<span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'longitude'</span><span class="p">]</span><span class="o">&lt;-</span><span class="mi">100</span><span class="p">],</span><span class="n">day</span><span class="p">,</span><span class="n">ppdata</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'images/</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">day</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../images/2017-04-23.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">day</span> <span class="o">=</span> <span class="s1">'2017-04-25'</span>
+<span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'longitude'</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">],</span><span class="n">day</span><span class="p">,</span><span class="n">ppdata</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'images/</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">day</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../images/2017-04-25.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">day</span> <span class="o">=</span> <span class="s1">'2017-09-09'</span>
+<span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'longitude'</span><span class="p">]</span><span class="o">&lt;-</span><span class="mi">100</span><span class="p">],</span><span class="n">day</span><span class="p">,</span><span class="n">ppdata</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'images/</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">day</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../images/2017-09-09.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Make-animated-GIFs-from-images">Make animated GIFs from images<a class="anchor-link" href="#Make-animated-GIFs-from-images">¶</a>
+</h3>
+<p>There's two straightforward ways to make animated GIFs in Python. First, I could create an animation with <code>Matplotlib</code> and save the animation as a GIF. Second, I can load static images with <code>imagio</code> and combine them. Since I've already made the static images, I'll take the second route.</p>
+<p>Here I write a function that takes a list of filenames, the duration we want for each image, and the output file name, and creates a GIF out of those images</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">imageio</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">create_gif</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">outname</span><span class="p">):</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">outname</span>
+    <span class="n">imageio</span><span class="o">.</span><span class="n">mimsave</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">'GIF'</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First I'll make a GIF of the entire location history, with each image lasting 1 second.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s1">'images/*.png'</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">create_gif</span><span class="p">(</span><span class="n">files</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'images/google-location-history.gif'</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I can now also just take date ranges and make GIFs of specific trips.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># US Southwest</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'images/2017-09-09.png'</span><span class="p">)</span>
+<span class="n">finish</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'images/2017-09-24.png'</span><span class="p">)</span>
+<span class="n">create_gif</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">finish</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span><span class="s1">'images/southwest.gif'</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../images/southwest.gif" alt="/images/southwest.gif"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Hawaii</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'images/2017-04-22.png'</span><span class="p">)</span>
+<span class="n">finish</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'images/2017-05-03.png'</span><span class="p">)</span>
+<span class="n">create_gif</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">finish</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span><span class="s1">'images/hawaii.gif'</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../images/hawaii.gif" alt="/images/hawaii.gif"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Christmas 2017</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'images/2017-12-22.png'</span><span class="p">)</span>
+<span class="n">finish</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'images/2018-01-01.png'</span><span class="p">)</span>
+<span class="n">create_gif</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">finish</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span><span class="s1">'images/christmas.gif'</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../images/christmas.gif" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can even see the two days over the Christams holidays where my phone was lost in a snow bank! And the time my flight was diverted on the way to Hawaii and I had to spend a night in Portland.</p>
+<p>The main challenge in making GIFs out of cartographic renderings is that it's tough to get a consistent aspect ratio. In my function, each map has an equal latitude and longitude range in degrees, but depending on the projection you're mapping in this will change the resulting aspect ratio of your image depending on the latitude at which you're plotting. I dealt with this be specifying a square figure size in my initial pyplot call, otherwise some of the images might get cut off when you combine them as a GIF.</p>
+
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+<li class="previous">
+                <a href="../what-really-affects-bikeshare-use-in-vancouver/" rel="prev" title="What really affects bikeshare use in Vancouver?">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../mountain-view-cemetary-open-data/" rel="next" title="Mountain View Cemetary Open Data">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="mikejarrett",
+            disqus_url="https://notes.mikejarrett.ca/mapping-googles-location-history-in-python/",
+        disqus_title="Mapping Google's Location History in Python",
+        disqus_identifier="cache/posts/mapping-googles-location-history-in-python.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
+        </script></article><script>var disqus_shortname="mikejarrett";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2019         <a href="mailto:mike@mikejarrett.ca">Mike Jarrett</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>
