@@ -125,6 +125,15 @@
 //}
 $( document ).ready(toggle_setup);
 $( document ).ready(code_toggle);
+// if the image in the window of browser when the page is loaded, show that image
+$(document).ready(function(){
+        showImages('img');
+});
+
+// if the image in the window of browser when scrolling the page, show that image
+$(window).scroll(function() {
+        showImages('img');
+});
 </script><form id="toggle-button" action="javascript:code_toggle()"><input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."></form>
     </div>
     
