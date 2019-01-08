@@ -883,10 +883,22 @@ IMAGE_FOLDERS = {'images': 'images'}
 #     ("icon", "/icon_128x128.png", "128x128"),
 # )
 FAVICONS = (
-     ("icon", "https://data.mikejarrett.ca/images/favicon.ico", "16x16"),
- )
-
-# Show teasers (instead of full posts) in indexes? Defaults to False.
+     ("icon", "/images/favicon.ico", "16x16"),
+    ("apple-touch-icon" ,"/images/apple-icon-57x57.png","57x57"),
+    ("apple-touch-icon","/images/apple-icon-60x60.png","60x60"),
+    ("apple-touch-icon","/images/apple-icon-72x72.png","72x72"),
+    ("apple-touch-icon","/images/apple-icon-76x76.png","76x76"),
+    ("apple-touch-icon","/images/apple-icon-114x114.png","114x114"),
+    ("apple-touch-icon","/images/apple-icon-120x120.png","120x120"),
+    ("apple-touch-icon","/images/apple-icon-144x144.png","144x144"),
+    ("apple-touch-icon","/images/apple-icon-152x152.png","152x152"),
+    ("apple-touch-icon","/images/apple-icon-180x180.png","180x180"),
+    ("icon","/images/android-icon-192x192.png","192x192"),
+    ("icon","/images/favicon-32x32.png","32x32"),
+    ("icon","/images/favicon-96x96.png","96x96"),
+    ("icon","/images/favicon-16x16.png","16x16"),
+)
+    # Show teasers (instead of full posts) in indexes? Defaults to False.
 INDEX_TEASERS = True
 
 # HTML fragments with the Read more... links.
