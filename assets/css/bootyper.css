@@ -19,7 +19,8 @@ div.input {
 
 /* For fading in images https://stackoverflow.com/questions/27747970/how-to-make-images-fade-visible-when-im-scrolling*/
 img {
-        visibility: hidden;
+    visibility: hidden;
+    max-width: 100%
 }
 
 .fadeIn {
