@@ -18,7 +18,7 @@ div.input {
 
 div.output_subarea {
     /* Widens image-containing divs so that image is full body width */
-    max-width: 100%
+    max-width: 100%;
 }
 
 /* For fading in images https://stackoverflow.com/questions/27747970/how-to-make-images-fade-visible-when-im-scrolling*/
