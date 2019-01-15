@@ -150,7 +150,7 @@ NAVIGATION_ALT_LINKS = {
 }
 
 # Name of the theme to use.
-THEME = "bootblog4"
+#THEME = "bootblog4"
 #THEME = "lanyon"
 THEME = "bootyper"
 
@@ -1078,7 +1078,7 @@ DEPLOY_DRAFTS = True
 # IPYNB_CONFIG = {}
 # With the following example configuration you can use a custom jinja template
 # called `toggle.tpl` which has to be located in your site/blog main folder:
-# IPYNB_CONFIG = {'Exporter':{'template_file': 'toggle'}}
+#IPYNB_CONFIG = {'Exporter':{'template_file': 'toggle'}}
 
 # What Markdown extensions to enable?
 # You will also get gist, nikola and podcast because those are
@@ -1213,7 +1213,7 @@ MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', 'markdown.extensions.c
 # Extra things you want in the pages HEAD tag. This will be added right
 # before </head>
 # (translatable)
-# EXTRA_HEAD_DATA = ""
+EXTRA_HEAD_DATA = '<meta property="og:image" content="https://data.mikejarrett.ca/images/logo.png">'
 # Google Analytics or whatever else you use. Added to the bottom of <body>
 # in the default template (base.tmpl).
 # (translatable)
