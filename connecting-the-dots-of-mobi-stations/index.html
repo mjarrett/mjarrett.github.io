@@ -7,7 +7,6 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/bootyper.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
@@ -26,7 +25,8 @@
 <link rel="icon" href="../images/favicon-32x32.png" sizes="32x32">
 <link rel="icon" href="../images/favicon-96x96.png" sizes="96x96">
 <link rel="icon" href="../images/favicon-16x16.png" sizes="16x16">
-<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="author" content="Mike Jarrett">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta property="og:image" content="https://data.mikejarrett.ca/images/logo.png">
+<meta name="author" content="Mike Jarrett">
 <meta name="robots" content="noindex">
 <meta property="og:site_name" content="Mike Jarrett">
 <meta property="og:title" content="Connecting the dots of Mobi stations">
@@ -53,8 +53,6 @@ from mobi_system_data impor">
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script><script src="../assets/js/bootyper.js"></script>
 </head>
 <body>
-
-
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
 
 <!-- Menubar -->
@@ -155,6 +153,9 @@ from mobi_system_data impor">
 // }
 // code_show = !code_show
 //}
+
+     code_show = true;
+console.log(code_show)
 $( document ).ready(toggle_setup);
 $( document ).ready(code_toggle);
 

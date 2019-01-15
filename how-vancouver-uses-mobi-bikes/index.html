@@ -7,7 +7,6 @@
 <link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/bootyper.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
@@ -26,8 +25,10 @@
 <link rel="icon" href="../images/favicon-32x32.png" sizes="32x32">
 <link rel="icon" href="../images/favicon-96x96.png" sizes="96x96">
 <link rel="icon" href="../images/favicon-16x16.png" sizes="16x16">
-<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="author" content="Mike Jarrett">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta property="og:image" content="https://data.mikejarrett.ca/images/logo.png">
+<meta name="author" content="Mike Jarrett">
 <link rel="prev" href="../storing-metadata-in-pandas-dataframes/" title="Storing metadata in Pandas DataFrames" type="text/html">
+<link rel="next" href="../connecting-neighbourhoods/" title="Connecting neighbourhoods" type="text/html">
 <meta property="og:site_name" content="Mike Jarrett">
 <meta property="og:title" content="How Vancouver Uses Mobi Bikes">
 <meta property="og:url" content="https://notes.mikejarrett.ca/how-vancouver-uses-mobi-bikes/">
@@ -42,8 +43,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script><script src="../assets/js/bootyper.js"></script>
 </head>
 <body>
-
-
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
 
 <!-- Menubar -->
@@ -144,6 +143,9 @@
 // }
 // code_show = !code_show
 //}
+
+     code_show = true;
+console.log(code_show)
 $( document ).ready(toggle_setup);
 $( document ).ready(code_toggle);
 
@@ -172,9 +174,9 @@ $(window).scroll(function() {
 <p>As handy as those live trip estimates are, they're very much estimates and only give us information about how often certain stations are used. Luckily, Mobi has started publishing open <a href="https://www.mobibikes.ca/en/system-data">system data</a>. This data set gives us a registry of every Mobi bikeshare trip since the beginning of 2017, current to the end of 2018 as of this writing. With this we have access to trip start and endpoints, trip duration and distance, membership type and more. In this post, I'll summarize some of the things I've learned after spending some time looking into this data.</p>
 <!-- TEASER_END-->
 
-<script type="text/javascript">
-    code_show = false
-</script><h3 id="A-note-on-the-code-and-data">A note on the code and data<a class="anchor-link" href="#A-note-on-the-code-and-data">¶</a>
+
+
+<h3 id="A-note-on-the-code-and-data">A note on the code and data<a class="anchor-link" href="#A-note-on-the-code-and-data">¶</a>
 </h3>
 <p>This blog post is written in a Jupyter notebook and contains the code needed to recreate all the figures and data shown. To toggle whether the raw code is displayed, click the blue button below the title of the blog. Beyond the code in this notebook, I rely on a package of python helper functions included in my <a href="https://github.com/mjarrett/mobi">Mobi repository on github</a>. All the data cleaning done is included in these functions except for standardizing some field names in the raw excel files. To download this post as a notebook, click the "Source" button in the top right corner.</p>
 <script>show_code = false</script>
@@ -268,10 +270,10 @@ $(window).scroll(function() {
 
 
 
-<div id="23b2d718-469c-4f0e-a179-4ae21ef011a8"></div>
+<div id="df69c844-71ea-4650-a866-b32bf2edb8a1"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#23b2d718-469c-4f0e-a179-4ae21ef011a8');
+var element = $('#df69c844-71ea-4650-a866-b32bf2edb8a1');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -1115,10 +1117,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="890643cf-96d7-4444-9ff4-3a2472a199f1"></div>
+<div id="86a36bab-72ae-4f5e-aeda-875557febcfe"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#890643cf-96d7-4444-9ff4-3a2472a199f1');
+var element = $('#86a36bab-72ae-4f5e-aeda-875557febcfe');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -1963,10 +1965,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="8ea11c4e-343c-4bc3-b863-51bffcf4cfd4"></div>
+<div id="85ce2e52-c74c-4b4a-9567-7d1ca0b5bdc8"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#8ea11c4e-343c-4bc3-b863-51bffcf4cfd4');
+var element = $('#85ce2e52-c74c-4b4a-9567-7d1ca0b5bdc8');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -2820,10 +2822,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="7bafd433-f8fc-4bea-b6e3-761cd217bd7c"></div>
+<div id="90559f4e-33bd-434c-8f1a-46372dde4fe2"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#7bafd433-f8fc-4bea-b6e3-761cd217bd7c');
+var element = $('#90559f4e-33bd-434c-8f1a-46372dde4fe2');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -3681,10 +3683,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="ed909aa6-6df7-4a85-a233-6e9237430f4f"></div>
+<div id="1b5f86c8-8639-4403-8ac4-931fef1f6ccb"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#ed909aa6-6df7-4a85-a233-6e9237430f4f');
+var element = $('#1b5f86c8-8639-4403-8ac4-931fef1f6ccb');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -4567,10 +4569,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="bba2ae86-870b-4898-85f4-62cca7103696"></div>
+<div id="fdded367-7a8b-4be7-a76b-f048deed48cf"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#bba2ae86-870b-4898-85f4-62cca7103696');
+var element = $('#fdded367-7a8b-4be7-a76b-f048deed48cf');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -5414,10 +5416,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="c4d01aab-440c-471a-a3b3-05dcd3b6da61"></div>
+<div id="9b4b40ac-23a3-422f-894f-4aeed2354501"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#c4d01aab-440c-471a-a3b3-05dcd3b6da61');
+var element = $('#9b4b40ac-23a3-422f-894f-4aeed2354501');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -6263,10 +6265,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="0374d56e-c7af-482d-b7c7-05ffff241c38"></div>
+<div id="e2fd026f-5e7f-4160-bd00-19c1f594438b"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#0374d56e-c7af-482d-b7c7-05ffff241c38');
+var element = $('#e2fd026f-5e7f-4160-bd00-19c1f594438b');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -7272,10 +7274,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="2c9bf1d4-d87a-4bdd-97d1-fb648f6f37f4"></div>
+<div id="bec5b988-6a7d-46a5-aa0f-c7047318a58d"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#2c9bf1d4-d87a-4bdd-97d1-fb648f6f37f4');
+var element = $('#bec5b988-6a7d-46a5-aa0f-c7047318a58d');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -8166,10 +8168,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="8e3d33e8-21dc-41db-b18a-2c56ec53c84b"></div>
+<div id="482e024f-cee5-4ac9-8472-60dd98d710d3"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#8e3d33e8-21dc-41db-b18a-2c56ec53c84b');
+var element = $('#482e024f-cee5-4ac9-8472-60dd98d710d3');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -9034,10 +9036,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="71074b37-a42b-4a32-aaff-de01c4cbe172"></div>
+<div id="fe1280d5-83c1-46fb-8b07-9fd2cf16d716"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#71074b37-a42b-4a32-aaff-de01c4cbe172');
+var element = $('#fe1280d5-83c1-46fb-8b07-9fd2cf16d716');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -9883,10 +9885,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="b664b1ea-c864-4708-a81c-e9fba4055801"></div>
+<div id="53c974f5-645f-4f24-a691-6bce0d37eb96"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b664b1ea-c864-4708-a81c-e9fba4055801');
+var element = $('#53c974f5-645f-4f24-a691-6bce0d37eb96');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -10759,10 +10761,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="a41e4074-7bd7-40b4-9c7c-ff5c3ecfd291"></div>
+<div id="dc8eefce-cdc6-4343-a0a7-91dd1066beaa"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#a41e4074-7bd7-40b4-9c7c-ff5c3ecfd291');
+var element = $('#dc8eefce-cdc6-4343-a0a7-91dd1066beaa');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -11606,10 +11608,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="4ab7a888-5cc4-4149-b400-517063d08938"></div>
+<div id="853666d5-dd8b-4b64-9157-db02d1e87aa1"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#4ab7a888-5cc4-4149-b400-517063d08938');
+var element = $('#853666d5-dd8b-4b64-9157-db02d1e87aa1');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -12479,10 +12481,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="605e8576-fbf9-43cd-883e-d3db785d63fe"></div>
+<div id="a9891b61-b127-4d4f-a8ea-19dd9bee9eb8"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#605e8576-fbf9-43cd-883e-d3db785d63fe');
+var element = $('#a9891b61-b127-4d4f-a8ea-19dd9bee9eb8');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -13308,10 +13310,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="91dfab86-383a-4099-a8a5-5a2afab3933e"></div>
+<div id="6105197e-630d-4246-9dcc-e73e3d86afb3"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#91dfab86-383a-4099-a8a5-5a2afab3933e');
+var element = $('#6105197e-630d-4246-9dcc-e73e3d86afb3');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -14167,10 +14169,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="397cc460-8f64-4737-b902-0c01cf580be6"></div>
+<div id="df1439f4-70a1-4ad7-9c05-9c8618915c27"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#397cc460-8f64-4737-b902-0c01cf580be6');
+var element = $('#df1439f4-70a1-4ad7-9c05-9c8618915c27');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -14982,6 +14984,9 @@ if (IPython.notebook.kernel != null) {
 <ul class="pager hidden-print">
 <li class="previous">
                 <a href="../storing-metadata-in-pandas-dataframes/" rel="prev" title="Storing metadata in Pandas DataFrames">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../connecting-neighbourhoods/" rel="next" title="Connecting neighbourhoods">Next post</a>
             </li>
         </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         

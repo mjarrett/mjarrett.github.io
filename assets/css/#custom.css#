@@ -4,8 +4,15 @@ div.prompt {
     display: none;
 }
 
-div.input {
-  border: none;
+div.input  {
+    /*border: none;*/
+    
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+}
+div.input * {
+    
 }
 
 
