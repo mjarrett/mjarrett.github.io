@@ -26,8 +26,9 @@
 <link rel="icon" href="images/favicon-32x32.png" sizes="32x32">
 <link rel="icon" href="images/favicon-96x96.png" sizes="96x96">
 <link rel="icon" href="images/favicon-16x16.png" sizes="16x16">
+<link rel="next" href="index-1.html" type="text/html">
 <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><meta property="og:image" content="https://data.mikejarrett.ca/images/logo.png">
-<script src="js/bootyper.js"></script><link rel="prefetch" href="connecting-neighbourhoods/" type="text/html">
+<link rel="prefetch" href="optimizing-your-nikola-blog-for-jupyter-notebooks/" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -79,7 +80,227 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="connecting-neighbourhoods/" class="u-url">Connecting neighbourhoods</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="optimizing-your-nikola-blog-for-jupyter-notebooks/" class="u-url">Optimizing your Nikola blog for Jupyter notebooks</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Mike Jarrett
+            </span></p>
+            <p class="dateline">
+            <a href="optimizing-your-nikola-blog-for-jupyter-notebooks/" rel="bookmark">
+            <time class="published dt-published" datetime="2019-01-14T16:27:18-08:00" itemprop="datePublished" title="2019-01-14 16:27">2019-01-14 16:27</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="optimizing-your-nikola-blog-for-jupyter-notebooks/#disqus_thread" data-disqus-identifier="cache/posts/optimizing-your-nikola-blog-for-jupyter-notebooks.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You've installed <a href="https://getnikola.com">Nikola</a>. You've also followed <a href="https://mglerner.github.io/posts/switching-to-nikloa-for-jupyter-notebooks-and-a-static-site.html">some instructions on how to use Jupyter notebooks as posts</a>. Everything works! But after you make your first Jupyter post, the results are... uninspiring. The import prompts are ugly. If you've written I post designed primarily for the content, not the code, there's no was to turn off showing the code cells. This post will describe how I -- someone with almost no experience with javascript, CSS, etc -- made my blog more functional to work with Jupyter notebooks.</p>
+<h2 id="Install-Nikola">Install Nikola<a class="anchor-link" href="optimizing-your-nikola-blog-for-jupyter-notebooks/#Install-Nikola">¶</a>
+</h2>
+<p>Follow the instructions on the Nikola website, or a million blog posts from other users.</p>
+<h2 id="Pick-a-theme">Pick a theme<a class="anchor-link" href="optimizing-your-nikola-blog-for-jupyter-notebooks/#Pick-a-theme">¶</a>
+</h2>
+<p>Pick the theme you like best and install with <code>nikola theme -i theme_name</code>. I used the bootstrap3 theme. These instructions should work for any Bootstrap-based theme, and possible others though I haven't tested them.</p>
+<h2 id="Create-a-new-theme">Create a new theme<a class="anchor-link" href="optimizing-your-nikola-blog-for-jupyter-notebooks/#Create-a-new-theme">¶</a>
+</h2>
+<p>Nikola allows for theme inheritance, so we'll create a new theme that inherits from bootstrap3. This means in our new theme we only have to create the files we want to change, otherwise Nikola will fall back to the parent theme. Following the <a href="https://getnikola.com/creating-a-theme.html">official instructions</a>:</p>
+<p><code>nikola theme -n bootyper --parent bootstrap4 --engine mako</code></p>
+<p>This will create a new directory <code>/themes/bootyper</code> which is empty except for a file called bootyper.theme. You'll also be prompted to update your current theme in your conf.py file. Might as well do that now. While you're in conf.py, update the following sections.</p>
+
+<pre><code>POSTS = (
+    ("posts/*.rst", "posts", "post.tmpl"),
+    ("posts/*.md", "posts", "post.tmpl"),
+    ("posts/*.txt", "posts", "post.tmpl"),
+    ("posts/*.html", "posts", "post.tmpl"),
+    ("posts/*.ipynb", "posts", "post_ipynb.tmpl"),
+)
+PAGES = (
+    ("pages/*.rst", "pages", "page.tmpl"),
+    ("pages/*.md", "pages", "page.tmpl"),
+    ("pages/*.txt", "pages", "page.tmpl"),
+    ("pages/*.html", "pages", "page.tmpl"),
+    ("pages/*.ipynb", "pages", "post_ipynb.tmpl"),
+)</code></pre>
+<p>What we're doing here is telling Nikola that when you add a Jupyter notebook as a page or post, that you want to use a different template file called <code>post_ipynb.tmpl</code>.</p>
+<h2 id="Make-a-Jupyter-template">Make a Jupyter template<a class="anchor-link" href="optimizing-your-nikola-blog-for-jupyter-notebooks/#Make-a-Jupyter-template">¶</a>
+</h2>
+<p>Now let's make that template. Copy the <code>post.tmpl</code> file from your parent theme and rename it as so:</p>
+<p><code>cp ./themes/bootstrap4/templates/post.tmpl ./themes/bootyper/templates/post_ipynb.tmpl</code></p>
+<p>Now we're free to modify the new template file, and it will only apply to posts that use Jupyter notebooks. First let's add a custom CSS file to the header. The post template we're using provides us with a block of code called "extra_head" which will be inserted into the end of the <code>&lt;head&gt;</code> element when the HTML is rendered. Let's link to our custom CSS file here</p>
+
+<pre><code>&lt;%block name="extra_head"&gt;
+[...]
+&lt;link rel="stylesheet" href="../assets/css/bootyper.css"&gt;
+&lt;/%block&gt;</code></pre>
+<h2 id="Clean-up-the-Jupyter-CSS">Clean up the Jupyter CSS<a class="anchor-link" href="optimizing-your-nikola-blog-for-jupyter-notebooks/#Clean-up-the-Jupyter-CSS">¶</a>
+</h2>
+<p>We need to create the file we just linked to. Open a new file <code>./themes/bootyper/assets/css/bootyper.css</code>. This is where we'll stick our custom CSS that only applies to posts and pages made with Jupyter notebooks.</p>
+
+<pre><code>div.prompt {
+    display: none;
+}
+
+div.input  {
+    border: none;
+    background-color: none;
+}
+
+div.input * {
+    background-color: none;
+}
+
+/* set a max-width for horizontal fluid layout and make it centered */
+.body-content {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 750px; /* or 950px */
+}
+
+div.output_subarea {
+    /* Widens image-containing divs so that image is full body width */
+    max-width: 100%;
+}</code></pre>
+<p>It's totally up to you how to style your notebook. I totally ditch the input prompts, but instead you could just make them prettier than the default. I also change the styling of the input code blocks, and make the content div a little narrower so it's easier to read on wider screens. Finally I make embedded images the full width of the content div. I'm not much of a designer so I stop here, but the possibilities are of course endless.</p>
+<h2 id="Going-further-with-Javascript">Going further with Javascript<a class="anchor-link" href="optimizing-your-nikola-blog-for-jupyter-notebooks/#Going-further-with-Javascript">¶</a>
+</h2>
+<p>The one thing I really wanted for my blog was to make it optional for the reader to see the raw code. Some posts would be designed as code-throughs, but others would be read mainly for the text and images and the code would be an extra for those interested. I've added two features to make this possible: 1) A button that toggles the visibility of the input code blocks, and 2) a metadata setting to set the default visibility of the code blocks on page load. Let's create a javascript library for these features in <code>./themes/bootyper/assets/js/bootyper.js</code>.</p>
+
+<pre><code>function code_toggle() {
+    if (!code_show){
+    $('div.input').hide();
+    //$('div.prompt.output_prompt').hide();  //unnecessary since I'm hiding all prompts anyways in css
+    } else {
+    $('div.input').show();
+    }
+ code_show = !code_show
+}</code></pre>
+<p>This function checks the value of the javascript variable <code>code_show</code> and either shows or hides the div with the input code, then switches the value of code_show. We'll run this function on page load, and then when the reader clicks on a button to show/hids the code.</p>
+<p>Now we need to make another update to our template file <code>post_ipynb.tmpl</code>:</p>
+
+<pre><code>&lt;%block name="extra_head"&gt;
+[...]
+&lt;link rel="stylesheet" href="../assets/css/bootyper.css"&gt;
+&lt;script type="text/javascript" src="https://code.jquery.com/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="../assets/js/bootyper.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+code_show = false;
+$( document ).ready(code_toggle);
+&lt;/%block&gt;</code></pre>
+<p>Here we've added a jquery library and our custom bootyper.js file. I've hard-coded in the default value of <code>code_show</code> as false, then I call the <code>code_toggle</code> function so that when the page loads the code cells aren't shown. Further down in the template file we can add a button to run this script:</p>
+
+<pre><code>&lt;%block name="content"&gt;
+&lt;article class="post-${post.meta('type')} h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"&gt;
+    ${pheader.html_post_header()}
+
+
+    &lt;form id="toggle-button" action="javascript:code_toggle()"&gt;&lt;input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."&gt;&lt;/form&gt;
+    [...]
+&lt;/%block&gt;</code></pre>
+<p>We're only adding the <code>&lt;form&gt;</code> element. I place the button immediately at the top of the content of the article, below the title and data/author. You can place it wherever you'd prefer, and give it any style you'd like. Again I just keep it simple and use a default bootstrap button style. And that's all it takes to have a button to optionally show or hide the input code in your Jupyter notebook!</p>
+<h2 id="One-more-step:-Nikola-metadata">One more step: Nikola metadata<a class="anchor-link" href="optimizing-your-nikola-blog-for-jupyter-notebooks/#One-more-step:-Nikola-metadata">¶</a>
+</h2>
+<p>Finally, I want to be able to set the default <code>code_show</code> value on a post by post basis. I do this using the notebook metadata. In Jupyter, go to Edit-&gt;Edit Notebook Metadata and you'll see see some JSON elements. By running <code>nikola add_post -i notebook.ipynb</code> to add your notebook as a Nikola post, Nikola will insert some custom fields into the JSON. We just need to add one field, <code>code = "false"</code>, to the metadata so it looks something like:</p>
+
+<pre><code>{
+  "kernelspec": {
+    "name": "python3",
+    "display_name": "Python 3",
+    "language": "python"
+  },
+  "language_info": {
+    "name": "python",
+    "version": "3.6.6",
+    "mimetype": "text/x-python",
+    "codemirror_mode": {
+      "name": "ipython",
+      "version": 3
+    },
+    "pygments_lexer": "ipython3",
+    "nbconvert_exporter": "python",
+    "file_extension": ".py"
+  },
+  "nikola": {
+    "category": "",
+    "code": "false",
+    "date": "2019-01-14 16:27:18 UTC-08:00",
+    "description": "",
+    "link": "",
+    "slug": "optimizing-your-nikola-blog-for-jupyter-notebooks",
+    "status": "draft",
+    "tags": "",
+    "title": "Optimizing your Nikola blog for Jupyter notebooks",
+    "type": "text"
+  }
+}</code></pre>
+<p>These metadata fields will automoatically get passed to the Nikola template engine so they're available to use in your template file. Let's add an if/else statement in the template to set the <code>code_show</code> variable based on our <code>code</code> metadata field.</p>
+
+<pre><code>&lt;%block name="extra_head"&gt;
+[...]
+&lt;link rel="stylesheet" href="../assets/css/bootyper.css"&gt;
+&lt;script type="text/javascript" src="https://code.jquery.com/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="../assets/js/bootyper.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+% if post.meta('code') in ["false","False"]:
+    code_show = false;
+% else:
+    code_show = true;
+% endif
+$( document ).ready(code_toggle);
+&lt;/%block&gt;</code></pre>
+<p>Now if I set the <code>code</code> metadata to "false" or "False" then the code cells will be hidden on page load. Otherwise they'll be shown!</p>
+<p>That's it! Hopefully this is a good rundown of the basics of optimizing a Nikola theme for Jupyter notebooks and you'll be able to further customize from here. I keep my version of the bootyper theme on <a href="https://github.com/mjarrett/bootyper">github</a>. It contains the features show here plus a few extra features that aren't in the default theme. Some things I'd like to add in the future is having the code cells show some marker when they're hidden so the reader know's they're there, and also to have the toggle button float as the reader scrolls down the page.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s2">"Here's the output of a code cell. Use the toggle button to see the code!"</span>
+<span class="n">a</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[2]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>"Here's the output of a code cell. Use the toggle button to see the code!"</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="connecting-neighbourhoods/" class="u-url">Connecting neighbourhoods</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Mike Jarrett
@@ -438,66 +659,14 @@ The first problem was to read the API and take a guess at station activity. To d
 <script src="https://gist.github.com/mjarrett/72ac77d80e50f32f020ca1abee5bdc49.js"></script><p></p>
 </div>
     </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="matplotlib-on-the-web/" class="u-url">Matplotlib on the web</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="matplotlib-on-the-web/" rel="bookmark">
-            <time class="published dt-published" datetime="2017-04-14T19:08:55-07:00" itemprop="datePublished" title="2017-04-14 19:08">2017-04-14 19:08</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="matplotlib-on-the-web/#disqus_thread" data-disqus-identifier="cache/posts/matplotlib-on-the-web.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div>
-<p></p>
-<p>I've been learning a lot of Matplotlib recently at work and through a course I took on data visualization. I've especially had fun with making interactive plots, and I was curious about whether MPL code could be converted into HTML5 and/or javascript for presentation on the web. I'm a researcher, not a developer, so my main goal was to use the datavis library I already know without having to learn a bunch of javascript.</p>
-<p>In my googling, I've found a few solutions to this issue. None are perfect for what I was hoping to do (have Django and MPL work together to produce a nice interactive figure) but I did come across some interesting tools.</p>
-<!--more-->
-
-<p></p>
-<h4></h4>
-<h4>The 'webagg' backend for matplotlib</h4>
-This was the solution I was expecting to work. When you specify the webagg backend after importing matplotlib, running f.show() starts up a mini web server and opens the plot in your default browser. As far as I can tell, the plot has the full functionality you'd get with any of the traditional backends.
-<p>The magic of having full interactivity in the browser relies on the figure staying connected to the python kernel, which is non-trivial to set up on a live website. I haven't found any instructions that a non-expert can follow to set this up on a personal website.</p>
-<p></p>
-<h4>MPLD3</h4>
-<a href="http://mpld3.github.io/index.html">mpld3</a> is a python package that converts your matplotlib code into d3.js code. It's great! Instead of <code>f.show()</code>, you can run <code>mpld3.save_html(f, 'test.html')</code> and you have a html snippet that can be inserted into a webpage. The plot below is just vanilla matplotlib saved with mpld3.save_html.
-<p>%CODE3%</p>
-<p>The plots look great and you get the default panning/zooming functions you expect in MPL. However widgets don't work so you don't get the full interactive experience. mpld3 does have some plugins, so for example you can get tooltips when hovering over plot elements. This is great, but requires some non-MPL code. Below I've added a hover tooltip which displays the label of a line plot when you hover over it. Very neat, but still not quite matplotlib's picker.</p>
-<p>%CODE4%</p>
-<p>The mpld3 website has a tutorial on writing your own plugins, and it looks like there's very little stopping you from recreated any feature you want as long as you know d3.js. I really appreciate all the work that's gone into mpld3, but it's still missing some pretty important features. For example, you might have noticed the years in the x-axis tick labels have a comma in them, which would be easily fixable in vanilla MPL with <code>ax.xaxis.set_ticklabels()</code>. But mpld3 doesn't (yet?) have support for setting ticklabels, so you're stuck with whatever shows up. A small price to pay for the ease of use, but still noticeable.
-</p>
-<h4>Bokeh</h4>
-<a href="http://bokeh.pydata.org">Bokeh</a> is a python visualization library that targets web browsers. It looks like it's further along in development than mpld3, however it's not trivially convertible from matplotlib. There is a bokeh.mpl module, but it is no longer maintained and is considered deprecated. I haven't tried Bokeh myself yet, but if I was going make web visuals a major focus and wanted to stick with python, this is probably where I'd end up.
-<h4>plot.ly</h4>
-<a href="http://plot.ly">plot.ly</a> seems to be the enterprise solution for interactive web plots in python (and other languages), and it funnels users towards hosting plots on its own server and has a subscription model. But they've released their code as open source, and it's possible to use the plotly library to convert your code to javascript to add to your own site. It's certainly more fully featured, but it's also substantially heavier than mpld3 -- for the same plot, the html snippet is 20,000 character for plot.ly but 2,000 characters for mpld3. To make the plot below, I took the same code as above and just added
-<code>
-import plotly.plotly as py
-import plotly.tools as tls
-import plotly.offline as plo</code>
-<p>plotly_fig = tls.mpl_to_plotly( f )
-plo.plot(plotly_fig, filename='housing_plotly')</p>
-<p>%CODE5%</p>
-<p>The tooltips happen without any extra code. I haven't spend much time learning the ins and outs of plotly so I'm not sure how customizable it is. I like that it works out of the box and looks professional, but the default tooltips and toolbar do feel a little busy. Hard to argue with free and easy though!</p>
-<p>For me, the likely answer seems to be that I'll use mpld3 when I want simple and clean web visualizations, and I'll use plot.ly when I want to have a bit more interactivity. If I end up spending more of my time doing this I'll just learn Bokeh instead, but I'd rather not learn a new library if I don't have to. And I'll keep my fingers crossed that smarter people than me make it easy to host fully interactive MPL plots which stay connected to the python kernel on any django website.</p>
-<p><strong>Update:</strong> Jake VanderPlas gave a great talk at Pycon that covers all this that I wish I'd found while researching all this.</p>
-<p>https://www.youtube.com/watch?v=FytuB8nFHPQ</p>
-</div>
-    </div>
     </article>
 </div>
 
-
-
-        
-       <script>var disqus_shortname="mikejarrett";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        <nav class="postindexpager"><ul class="pager">
+<li class="next">
+                <a href="index-1.html" rel="next">Older posts</a>
+            </li>
+        </ul></nav><script>var disqus_shortname="mikejarrett";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
         </script>
 </div>

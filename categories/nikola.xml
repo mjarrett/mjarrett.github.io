@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mike Jarrett (Posts about nikola)</title><link>https://notes.mikejarrett.ca/</link><description></description><atom:link href="https://notes.mikejarrett.ca/categories/nikola.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:mike@mikejarrett.ca"&gt;Mike Jarrett&lt;/a&gt; </copyright><lastBuildDate>Sat, 19 Jan 2019 20:57:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Optimizing your Nikola blog for Jupyter notebooks</title><link>https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/</link><dc:creator>Mike Jarrett</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;You've installed &lt;a href="https://getnikola.com"&gt;Nikola&lt;/a&gt;. You've also followed &lt;a href="https://mglerner.github.io/posts/switching-to-nikloa-for-jupyter-notebooks-and-a-static-site.html"&gt;some instructions on how to use Jupyter notebooks as posts&lt;/a&gt;. Everything works! But after you make your first Jupyter post, the results are... uninspiring. The import prompts are ugly. If you've written I post designed primarily for the content, not the code, there's no was to turn off showing the code cells. This post will describe how I -- someone with almost no experience with javascript, CSS, etc -- made my blog more functional to work with Jupyter notebooks.&lt;/p&gt;
+&lt;h2 id="Install-Nikola"&gt;Install Nikola&lt;a class="anchor-link" href="https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/#Install-Nikola"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Follow the instructions on the Nikola website, or a million blog posts from other users.&lt;/p&gt;
+&lt;h2 id="Pick-a-theme"&gt;Pick a theme&lt;a class="anchor-link" href="https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/#Pick-a-theme"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Pick the theme you like best and install with &lt;code&gt;nikola theme -i theme_name&lt;/code&gt;. I used the bootstrap3 theme. These instructions should work for any Bootstrap-based theme, and possible others though I haven't tested them.&lt;/p&gt;
+&lt;h2 id="Create-a-new-theme"&gt;Create a new theme&lt;a class="anchor-link" href="https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/#Create-a-new-theme"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Nikola allows for theme inheritance, so we'll create a new theme that inherits from bootstrap3. This means in our new theme we only have to create the files we want to change, otherwise Nikola will fall back to the parent theme. Following the &lt;a href="https://getnikola.com/creating-a-theme.html"&gt;official instructions&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;nikola theme -n bootyper --parent bootstrap4 --engine mako&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will create a new directory &lt;code&gt;/themes/bootyper&lt;/code&gt; which is empty except for a file called bootyper.theme. You'll also be prompted to update your current theme in your conf.py file. Might as well do that now. While you're in conf.py, update the following sections.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;POSTS = (
+    ("posts/*.rst", "posts", "post.tmpl"),
+    ("posts/*.md", "posts", "post.tmpl"),
+    ("posts/*.txt", "posts", "post.tmpl"),
+    ("posts/*.html", "posts", "post.tmpl"),
+    ("posts/*.ipynb", "posts", "post_ipynb.tmpl"),
+)
+PAGES = (
+    ("pages/*.rst", "pages", "page.tmpl"),
+    ("pages/*.md", "pages", "page.tmpl"),
+    ("pages/*.txt", "pages", "page.tmpl"),
+    ("pages/*.html", "pages", "page.tmpl"),
+    ("pages/*.ipynb", "pages", "post_ipynb.tmpl"),
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What we're doing here is telling Nikola that when you add a Jupyter notebook as a page or post, that you want to use a different template file called &lt;code&gt;post_ipynb.tmpl&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="Make-a-Jupyter-template"&gt;Make a Jupyter template&lt;a class="anchor-link" href="https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/#Make-a-Jupyter-template"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Now let's make that template. Copy the &lt;code&gt;post.tmpl&lt;/code&gt; file from your parent theme and rename it as so:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cp ./themes/bootstrap4/templates/post.tmpl ./themes/bootyper/templates/post_ipynb.tmpl&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now we're free to modify the new template file, and it will only apply to posts that use Jupyter notebooks. First let's add a custom CSS file to the header. The post template we're using provides us with a block of code called "extra_head" which will be inserted into the end of the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; element when the HTML is rendered. Let's link to our custom CSS file here&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;%block name="extra_head"&amp;gt;
+[...]
+&amp;lt;link rel="stylesheet" href="../assets/css/bootyper.css"&amp;gt;
+&amp;lt;/%block&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="Clean-up-the-Jupyter-CSS"&gt;Clean up the Jupyter CSS&lt;a class="anchor-link" href="https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/#Clean-up-the-Jupyter-CSS"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We need to create the file we just linked to. Open a new file &lt;code&gt;./themes/bootyper/assets/css/bootyper.css&lt;/code&gt;. This is where we'll stick our custom CSS that only applies to posts and pages made with Jupyter notebooks.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;div.prompt {
+    display: none;
+}
+
+div.input  {
+    border: none;
+    background-color: none;
+}
+
+div.input * {
+    background-color: none;
+}
+
+/* set a max-width for horizontal fluid layout and make it centered */
+.body-content {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 750px; /* or 950px */
+}
+
+div.output_subarea {
+    /* Widens image-containing divs so that image is full body width */
+    max-width: 100%;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It's totally up to you how to style your notebook. I totally ditch the input prompts, but instead you could just make them prettier than the default. I also change the styling of the input code blocks, and make the content div a little narrower so it's easier to read on wider screens. Finally I make embedded images the full width of the content div. I'm not much of a designer so I stop here, but the possibilities are of course endless.&lt;/p&gt;
+&lt;h2 id="Going-further-with-Javascript"&gt;Going further with Javascript&lt;a class="anchor-link" href="https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/#Going-further-with-Javascript"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The one thing I really wanted for my blog was to make it optional for the reader to see the raw code. Some posts would be designed as code-throughs, but others would be read mainly for the text and images and the code would be an extra for those interested. I've added two features to make this possible: 1) A button that toggles the visibility of the input code blocks, and 2) a metadata setting to set the default visibility of the code blocks on page load. Let's create a javascript library for these features in &lt;code&gt;./themes/bootyper/assets/js/bootyper.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function code_toggle() {
+    if (!code_show){
+    $('div.input').hide();
+    //$('div.prompt.output_prompt').hide();  //unnecessary since I'm hiding all prompts anyways in css
+    } else {
+    $('div.input').show();
+    }
+ code_show = !code_show
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This function checks the value of the javascript variable &lt;code&gt;code_show&lt;/code&gt; and either shows or hides the div with the input code, then switches the value of code_show. We'll run this function on page load, and then when the reader clicks on a button to show/hids the code.&lt;/p&gt;
+&lt;p&gt;Now we need to make another update to our template file &lt;code&gt;post_ipynb.tmpl&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;%block name="extra_head"&amp;gt;
+[...]
+&amp;lt;link rel="stylesheet" href="../assets/css/bootyper.css"&amp;gt;
+&amp;lt;script type="text/javascript" src="https://code.jquery.com/jquery.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type="text/javascript" src="../assets/js/bootyper.js"&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script type="text/javascript"&amp;gt;
+code_show = false;
+$( document ).ready(code_toggle);
+&amp;lt;/%block&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we've added a jquery library and our custom bootyper.js file. I've hard-coded in the default value of &lt;code&gt;code_show&lt;/code&gt; as false, then I call the &lt;code&gt;code_toggle&lt;/code&gt; function so that when the page loads the code cells aren't shown. Further down in the template file we can add a button to run this script:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;%block name="content"&amp;gt;
+&amp;lt;article class="post-${post.meta('type')} h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"&amp;gt;
+    ${pheader.html_post_header()}
+
+
+    &amp;lt;form id="toggle-button" action="javascript:code_toggle()"&amp;gt;&amp;lt;input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."&amp;gt;&amp;lt;/form&amp;gt;
+    [...]
+&amp;lt;/%block&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We're only adding the &lt;code&gt;&amp;lt;form&amp;gt;&lt;/code&gt; element. I place the button immediately at the top of the content of the article, below the title and data/author. You can place it wherever you'd prefer, and give it any style you'd like. Again I just keep it simple and use a default bootstrap button style. And that's all it takes to have a button to optionally show or hide the input code in your Jupyter notebook!&lt;/p&gt;
+&lt;h2 id="One-more-step:-Nikola-metadata"&gt;One more step: Nikola metadata&lt;a class="anchor-link" href="https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/#One-more-step:-Nikola-metadata"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Finally, I want to be able to set the default &lt;code&gt;code_show&lt;/code&gt; value on a post by post basis. I do this using the notebook metadata. In Jupyter, go to Edit-&amp;gt;Edit Notebook Metadata and you'll see see some JSON elements. By running &lt;code&gt;nikola add_post -i notebook.ipynb&lt;/code&gt; to add your notebook as a Nikola post, Nikola will insert some custom fields into the JSON. We just need to add one field, &lt;code&gt;code = "false"&lt;/code&gt;, to the metadata so it looks something like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  "kernelspec": {
+    "name": "python3",
+    "display_name": "Python 3",
+    "language": "python"
+  },
+  "language_info": {
+    "name": "python",
+    "version": "3.6.6",
+    "mimetype": "text/x-python",
+    "codemirror_mode": {
+      "name": "ipython",
+      "version": 3
+    },
+    "pygments_lexer": "ipython3",
+    "nbconvert_exporter": "python",
+    "file_extension": ".py"
+  },
+  "nikola": {
+    "category": "",
+    "code": "false",
+    "date": "2019-01-14 16:27:18 UTC-08:00",
+    "description": "",
+    "link": "",
+    "slug": "optimizing-your-nikola-blog-for-jupyter-notebooks",
+    "status": "draft",
+    "tags": "",
+    "title": "Optimizing your Nikola blog for Jupyter notebooks",
+    "type": "text"
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;These metadata fields will automoatically get passed to the Nikola template engine so they're available to use in your template file. Let's add an if/else statement in the template to set the &lt;code&gt;code_show&lt;/code&gt; variable based on our &lt;code&gt;code&lt;/code&gt; metadata field.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;%block name="extra_head"&amp;gt;
+[...]
+&amp;lt;link rel="stylesheet" href="../assets/css/bootyper.css"&amp;gt;
+&amp;lt;script type="text/javascript" src="https://code.jquery.com/jquery.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type="text/javascript" src="../assets/js/bootyper.js"&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;script type="text/javascript"&amp;gt;
+% if post.meta('code') in ["false","False"]:
+    code_show = false;
+% else:
+    code_show = true;
+% endif
+$( document ).ready(code_toggle);
+&amp;lt;/%block&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now if I set the &lt;code&gt;code&lt;/code&gt; metadata to "false" or "False" then the code cells will be hidden on page load. Otherwise they'll be shown!&lt;/p&gt;
+&lt;p&gt;That's it! Hopefully this is a good rundown of the basics of optimizing a Nikola theme for Jupyter notebooks and you'll be able to further customize from here. I keep my version of the bootyper theme on &lt;a href="https://github.com/mjarrett/bootyper"&gt;github&lt;/a&gt;. It contains the features show here plus a few extra features that aren't in the default theme. Some things I'd like to add in the future is having the code cells show some marker when they're hidden so the reader know's they're there, and also to have the toggle button float as the reader scrolls down the page.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [2]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Here's the output of a code cell. Use the toggle button to see the code!"&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+&lt;div class="prompt output_prompt"&gt;Out[2]:&lt;/div&gt;
+
+
+
+
+&lt;div class="output_text output_subarea output_execute_result"&gt;
+&lt;pre&gt;"Here's the output of a code cell. Use the toggle button to see the code!"&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;&lt;/div&gt;</description><category>nikola</category><guid>https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/</guid><pubDate>Tue, 15 Jan 2019 00:27:18 GMT</pubDate></item></channel></rss>
