@@ -18,6 +18,10 @@
   <lastmod>2019-01-14T05:05:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/jupyter.xml</loc>
+  <lastmod>2019-01-20T01:57:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/matplotlib.xml</loc>
   <lastmod>2019-01-07T04:14:00Z</lastmod>
  </sitemap>
@@ -27,7 +31,7 @@
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/nikola.xml</loc>
-  <lastmod>2019-01-19T20:59:00Z</lastmod>
+  <lastmod>2019-01-20T01:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/python.xml</loc>
@@ -36,6 +40,10 @@
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/science.xml</loc>
   <lastmod>2019-01-07T04:14:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://notes.mikejarrett.ca/categories/theme.xml</loc>
+  <lastmod>2019-01-20T01:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/vancouver.xml</loc>
@@ -51,10 +59,10 @@
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/rss.xml</loc>
-  <lastmod>2019-01-19T20:59:00Z</lastmod>
+  <lastmod>2019-01-20T01:57:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/sitemap.xml</loc>
-  <lastmod>2019-01-19T21:07:00Z</lastmod>
+  <lastmod>2019-01-20T01:57:00Z</lastmod>
  </sitemap>
 </sitemapindex>
