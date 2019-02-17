@@ -1,75 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mike Jarrett</title><link>https://notes.mikejarrett.ca/</link><description>Mike Jarrett's Blog</description><atom:link href="https://notes.mikejarrett.ca/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:mike@mikejarrett.ca"&gt;Mike Jarrett&lt;/a&gt; </copyright><lastBuildDate>Sun, 17 Feb 2019 05:59:20 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Mapping Vancouver's Buses</title><link>https://notes.mikejarrett.ca/mapping-vancouvers-buses/</link><dc:creator>Mike Jarrett</dc:creator><description>&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mike Jarrett</title><link>https://notes.mikejarrett.ca/</link><description>Mike Jarrett's Blog</description><atom:link href="https://notes.mikejarrett.ca/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:mike@mikejarrett.ca"&gt;Mike Jarrett&lt;/a&gt; </copyright><lastBuildDate>Sun, 17 Feb 2019 06:01:20 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Mapping Vancouver's Buses</title><link>https://notes.mikejarrett.ca/mapping-vancouvers-buses/</link><dc:creator>Mike Jarrett</dc:creator><description>&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;I came across &lt;a href="https://twitter.com/realtimebus"&gt;@realtimebus&lt;/a&gt; the other day and immediately wanted to recreate is for Vancouver. Luckily &lt;a href="https://developer.translink.ca/"&gt;Translink has a realtime bus API&lt;/a&gt; that I could pull from and making an animated gif is pretty straightforward in Python. And since I already have some experience making twitter bots with &lt;a href="https://twitter.com/VanBikeShareBot"&gt;@VanBikeShareBot&lt;/a&gt; so I felt like I didn't really have a choice.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://notes.mikejarrett.ca/mapping-vancouvers-buses/"&gt;Read more…&lt;/a&gt; (19 min remaining to read)&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description><guid>https://notes.mikejarrett.ca/mapping-vancouvers-buses/</guid><pubDate>Sun, 17 Feb 2019 05:26:54 GMT</pubDate></item><item><title>mynotebook</title><link>https://notes.mikejarrett.ca/mynotebook/</link><dc:creator>Mike Jarrett</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
-    &lt;div class="container" id="notebook-container"&gt;
-
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [1]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-    &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [3]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-    &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class="output_wrapper"&gt;
-&lt;div class="output"&gt;
-
-
-&lt;div class="output_area"&gt;
-
-&lt;div class="prompt output_prompt"&gt;Out[3]:&lt;/div&gt;
-
-
-
-
-&lt;div class="output_text output_subarea output_execute_result"&gt;
-&lt;pre&gt;[&amp;lt;matplotlib.lines.Line2D at 0x7f20befe77f0&amp;gt;]&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;div class="output_area"&gt;
-
-&lt;div class="prompt"&gt;&lt;/div&gt;
-
-
-
-
-&lt;div class="output_png output_subarea "&gt;
-&lt;img src="https://notes.mikejarrett.ca/mynotebook/mynotebook_files/mynotebook_1_1.png"&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><guid>https://notes.mikejarrett.ca/mynotebook/</guid><pubDate>Mon, 04 Feb 2019 05:34:01 GMT</pubDate></item><item><title>Optimizing your Nikola blog for Jupyter notebooks</title><link>https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/</link><dc:creator>Mike Jarrett</dc:creator><description>&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;p&gt;&lt;a href="https://notes.mikejarrett.ca/mapping-vancouvers-buses/"&gt;Read more…&lt;/a&gt; (19 min remaining to read)&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description><guid>https://notes.mikejarrett.ca/mapping-vancouvers-buses/</guid><pubDate>Sun, 17 Feb 2019 05:26:54 GMT</pubDate></item><item><title>Optimizing your Nikola blog for Jupyter notebooks</title><link>https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/</link><dc:creator>Mike Jarrett</dc:creator><description>&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
@@ -194,4 +129,31 @@ The coefficients associated with the days of the week can be interpreted as the 
 &lt;p&gt;These are Anderson &amp;amp; 2nd (Granville Island); Aquatic Centre; Coal Harbour Community Centre; and  Davie &amp;amp; Beach. All seawall stations at major destinations. So all the outlier stations are stations that we wouldn't expect to show regular commuter patterns, but more tourist-style activity.&lt;/p&gt;
 &lt;p&gt;I was hoping to see different clusters to represent residential area stations vs employment area stations, but these don't show up. Not terribly surprising since the Mobi stations cover an area of the city where there is fairly dense residential development almost everywhere. This fits with our maps of station activity, where we saw that there were no major difference between bikes taken and bikes returned at each station.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;All the source code used for data acquisition and analysis in this post is available on my &lt;a href="https://github.com/mjarrett/mobi"&gt;github page&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;To see more posts like this, follow me on twitter &lt;a href="https://twitter.com/mikejarrett_"&gt;@mikejarrett_&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><category>bikes</category><category>datavis</category><category>mobi</category><category>python</category><category>Science</category><category>vancouver</category><guid>https://notes.mikejarrett.ca/mobi-station-activity/</guid><pubDate>Sun, 05 Nov 2017 05:36:22 GMT</pubDate></item></channel></rss>
+&lt;p&gt;&lt;em&gt;To see more posts like this, follow me on twitter &lt;a href="https://twitter.com/mikejarrett_"&gt;@mikejarrett_&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><category>bikes</category><category>datavis</category><category>mobi</category><category>python</category><category>Science</category><category>vancouver</category><guid>https://notes.mikejarrett.ca/mobi-station-activity/</guid><pubDate>Sun, 05 Nov 2017 05:36:22 GMT</pubDate></item><item><title>Machine learning with Vancouver bike share data</title><link>https://notes.mikejarrett.ca/machine-learning-with-vancouver-bike-share-data/</link><dc:creator>Mike Jarrett</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Six months ago I came across Jake VanderPlas' blog post &lt;a href="https://jakevdp.github.io/blog/2015/07/23/learning-seattles-work-habits-from-bicycle-counts/"&gt;examining Seattle bike commuting habits through bike trip data&lt;/a&gt;. I wanted to try to recreate it for Vancouver, but the city doesn't publish detailed bike trip data, just monthly numbers. For plan B, I looked into Mobi bike share data. But still no published data! Luckily, Mobi does publish an API with the number of bike at each station. It doesn't give trip information, but it's a start.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;em&gt;All the code needed to recreate this post is available on &lt;a href="https://github.com/mjarrett/mobi"&gt;my github page&lt;/a&gt;.&lt;/em&gt;
+&lt;/p&gt;&lt;h3&gt;Data Acquisition&lt;/h3&gt;
+The first problem was to read the API and take a guess at station activity. To do this, I query the API every minute. Whenever the bike count at a station changes, this is counted as bikes being taken out or returned. I don't know exactly how often Mobi updates this API, but I'm certainly undercounting activity -- whenever two people return a bike and take a bike within a minute or so of each other I'll miss the activity. But it's good enough for my purposes, and I'm more interested in trends than total numbers anyway.
+&lt;p&gt;I had two main problems querying the API: First, I'd starting by running the query script on my home machine. This meant that any computer downtime meant missing data. There's a few days missing while I updated my computer. Eventually I migrated to a google cloud server, so downtime is no longer an issue, but this introduced the second problem: time zones. I hadn't set a time zone for my new server, so all the times were recorded as UTC, while earlier data had been recorded in local Vancouver time. It took a long time of staring at the data wondering why it didn't make sense for me to realize what had happened, but luckily an easy fix in Pandas.
+&lt;/p&gt;&lt;h3&gt;Analysis&lt;/h3&gt;
+&lt;img class="aligncenter wp-image-168 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/hourly_usage_may-sep.png" alt="" width="640" height="480"&gt;
+&lt;p&gt;Our long stretch of good weather this summer is visible in the data. Usage was pretty consistent over July and August, and began to fall off near the end of September when the weather turned. I'll be looking more into the relationship between weather and bike usage once I have more off-season data, but for now I'm more interested in zooming in and looking at daily usage patterns. Looking at a typical week in mid summer, we see weekdays showing a typical commuter pattern with morning and evening peaks and a midday lull. One thing that jumps out is the afternoon peak being consistently larger than the morning peak. With bike share, people have the option to take the bus to work in the morning and then pick up a bike afterwork if they're in the mood. Weekends lose that bimodal distribution and show a single normal distribution centered in the afternoon. On most weekend days and some weekdays, there is a shoulder or very minor peak visible in the late evening, presumably people heading home from a night out.&lt;/p&gt;
+&lt;p&gt;&lt;img class="aligncenter wp-image-166 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/weekdata-2017-07-31-2017-08-06.png" alt="" width="640" height="480"&gt;&lt;/p&gt;
+&lt;p&gt;Looking at the next week, Monday immediately jumps out as showing a weekend pattern instead of a weekday. That Monday, of course, is the Monday of the August long weekend.&lt;/p&gt;
+&lt;p&gt;&lt;img class="aligncenter wp-image-167 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/weekdata-2017-08-07-2017-08-13.png" alt="" width="640" height="480"&gt;&lt;/p&gt;
+&lt;p&gt;So, by eye we can fairly easily distinguish weekday and weekend travel patterns. How can we train a computer to do the same?&lt;/p&gt;
+&lt;p&gt;First, I pivoted my data such that each row is a day, and each column is the hourly bike activity at each station (# columns = # stations * 24). I decided to keep the station information instead of summing across stations, but both give about the same result. This was provided as input to the &lt;a href="http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"&gt;primary component analysis (PCA) class of the Scikit-Learn Python package&lt;/a&gt;. PCA attempts to reduce the dimensionality of a data set (in our case, columns) while preserving the variance. For visualization, we can plot our data based on the the two components which most explain the variance in the data. Each point is a single day, colour labelled by total number of trips that day.&lt;/p&gt;
+&lt;p&gt;&lt;img class="wp-image-192 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_numtrips-2.png" alt="" width="640" height="480"&gt; PCA coloured by number of daily trips&lt;/p&gt;
+&lt;p&gt;It's apparent that the first component (along the X axis) corresponds roughly (but not exactly) to total number of trips. But what does the Y axis represent? To investigate further, we label the data points by day of week.&lt;/p&gt;
+&lt;p&gt;&lt;img class="wp-image-191 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_dayofweek-2.png" alt="" width="640" height="480"&gt; PCA coloured by day of week&lt;/p&gt;
+&lt;p&gt;The pattern is immediately clear. Weekdays are clustered at the bottom of our plot, and weekends are clustered at the top. A few outliers jump out. There are 3 Mondays clustered in with the weekend group. These turn out to be the Canada Day, BC Day and Labour Day stat holidays.&lt;/p&gt;
+&lt;p&gt;&lt;img class="wp-image-190 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_dayofweek_mondays-2.png" alt="" width="640" height="480"&gt; PCA with noteable Mondays labelled&lt;/p&gt;
+&lt;p&gt;Finally, I wanted to try unsupervised clustering to see if weekday and weekend clusters are separated enough to be distinguished automatically. For this, I used the &lt;a href="http://scikit-learn.org/stable/modules/mixture.html"&gt;GaussianMixture class from Scikit-learn&lt;/a&gt;. Here, we try to automatically split our data into a given number of groups, in this case two.&lt;/p&gt;
+&lt;p&gt;&lt;img class="wp-image-193 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_clustering-2.png" alt="" width="640" height="480"&gt; PCA and unsupervised clustering of June-September bike share usage&lt;/p&gt;
+&lt;p&gt;Not quite. There is a group of low-volume weekend days in the top right cornerthat can't be automatically distinguished from weekdays. All these days are in June and September. Maybe with more non-summer data this will resolve itself.&lt;/p&gt;
+&lt;p&gt;Out of curiosity, I re-ran the PCA and unsupervised clustering with only peak season data (July and August). Here, with more a more homogenous dataset, clustering works much better. In fact, only the first component (plotted along the X axis) is needed to distinguish between usage patterns.&lt;/p&gt;
+&lt;p&gt;&lt;img class="wp-image-194 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_clustering-3.png" alt="" width="640" height="480"&gt; PCA and unsupervised clustering of July and August bike share usage&lt;/p&gt;
+&lt;p&gt;Bike share usage will obviously decline during Vancouver's wet season, but I'm very interested to see how usage patterns will differ during the lower volume months.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;All the source code used for data acquisition and analysis in this post is available on my &lt;a href="https://github.com/mjarrett/mobi"&gt;github page&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;To see more posts like this, follow me on twitter &lt;a href="https://twitter.com/MikeJarrett_"&gt;@MikeJarrett_&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;</description><category>bikes</category><category>datavis</category><category>mobi</category><category>python</category><category>Science</category><guid>https://notes.mikejarrett.ca/machine-learning-with-vancouver-bike-share-data/</guid><pubDate>Mon, 23 Oct 2017 12:00:19 GMT</pubDate></item></channel></rss>
