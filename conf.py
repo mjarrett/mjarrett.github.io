@@ -220,7 +220,7 @@ POSTS = (
     ("posts/*.md", "", "post.tmpl"),
     ("posts/*.txt", "", "post.tmpl"),
     ("posts/*.html", "", "post.tmpl"),
-    ("posts/*.ipynb", "", "post_ipynb.tmpl"),
+    ("posts/*.ipynb", "", "post.tmpl"),
     
 )
 PAGES = (
@@ -228,7 +228,7 @@ PAGES = (
     ("pages/*.md", "", "page.tmpl"),
     ("pages/*.txt", "", "page.tmpl"),
     ("pages/*.html", "", "page.tmpl"),
-    ("pages/*.ipynb", "", "post_ipynb.tmpl"),
+    ("pages/*.ipynb", "", "post.tmpl"),
 )
 
 
@@ -337,7 +337,8 @@ NEW_POST_DATE_PATH = False
 # Nikola supports logo display.  If you have one, you can put the URL here.
 # Final output is <img src="LOGO_URL" id="logo" alt="BLOG_TITLE">.
 # The URL may be relative to the site root.
-LOGO_URL = 'https://data.mikejarrett.ca/images/logo-rect.png'
+#LOGO_URL = 'https://data.mikejarrett.ca/images/logo-rect.png'
+LOGO_URL = '/images/logo-rect.png'
 
 # If you want to hide the title of your website (for example, if your logo
 # already contains the text), set this to False.
@@ -1073,9 +1074,15 @@ DEPLOY_DRAFTS = True
 #     {left: "\\\\(", right: "\\\\)", display: false}
 # ]
 # """
-
 # Do you want to customize the nbconversion of your IPython notebook?
 # IPYNB_CONFIG = {}
+# From http://swan.physics.wsu.edu/forbes/public/notes/nikola-install/
+IPYNB_CONFIG = {
+
+  'Exporter': {
+      'preprocessors': ['nbconvert.preprocessors.ExtractOutputPreprocessor']
+  }
+}
 # With the following example configuration you can use a custom jinja template
 # called `toggle.tpl` which has to be located in your site/blog main folder:
 #IPYNB_CONFIG = {'Exporter':{'template_file': 'toggle'}}
