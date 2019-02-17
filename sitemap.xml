@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://notes.mikejarrett.ca/</loc>
-  <lastmod>2019-01-20T01:57:00Z</lastmod>
+  <lastmod>2019-02-17T05:27:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/140/</loc>
@@ -35,7 +35,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/archive.html</loc>
-  <lastmod>2019-01-21T16:44:00Z</lastmod>
+  <lastmod>2019-02-17T05:27:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/bootstrap-demo/</loc>
@@ -127,11 +127,15 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/index-1.html</loc>
-  <lastmod>2019-01-21T16:44:00Z</lastmod>
+  <lastmod>2019-02-17T05:27:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/internals/</loc>
   <lastmod>2019-01-07T04:38:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/ipynb-exporter-test/</loc>
+  <lastmod>2019-01-27T19:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/listings-demo/</loc>
@@ -147,7 +151,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/listings/hello.py.html</loc>
-  <lastmod>2019-01-21T16:44:00Z</lastmod>
+  <lastmod>2019-01-31T21:18:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/machine-learning-with-vancouver-bike-share-data/</loc>
@@ -156,6 +160,10 @@
  <url>
   <loc>https://notes.mikejarrett.ca/mapping-googles-location-history-in-python/</loc>
   <lastmod>2019-01-07T04:38:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/mapping-vancouvers-buses/</loc>
+  <lastmod>2019-02-17T05:27:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/matplotlib-on-the-web/</loc>
@@ -168,6 +176,14 @@
  <url>
   <loc>https://notes.mikejarrett.ca/mountain-view-cemetary-open-data/</loc>
   <lastmod>2019-01-07T04:38:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/mynotebook/</loc>
+  <lastmod>2019-02-04T05:34:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/mynotebook/index.src.html</loc>
+  <lastmod>2019-02-04T05:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/optimizing-your-nikola-blog-for-jupyter-notebooks/</loc>
@@ -196,6 +212,18 @@
  <url>
   <loc>https://notes.mikejarrett.ca/test-page/</loc>
   <lastmod>2019-01-07T04:38:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/test/</loc>
+  <lastmod>2019-01-27T20:39:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/tet/</loc>
+  <lastmod>2019-01-28T03:48:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/tet/index.src.html</loc>
+  <lastmod>2019-01-28T03:45:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/theming/</loc>

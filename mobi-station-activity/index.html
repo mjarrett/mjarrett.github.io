@@ -50,6 +50,26 @@ First, an animation of station activity during a random summer d">
 <meta property="article:tag" content="vancouver">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@mikejarrett_">
+<link rel="stylesheet" href="../assets/css/bootyper.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script><script type="text/javascript" src="../assets/js/bootyper.js"></script><script type="text/javascript">
+    
+        code_show = true;
+    console.log("head test");
+    console.log(code_show);
+    $( document ).ready(code_toggle);
+    
+    
+    
+    // if the image in the window of browser when the page is loaded, show that image (fade in)
+    $(document).ready(function(){
+        showImages('article img');
+    });
+
+    // if the image in the window of browser when scrolling the page, show that image
+    $(window).scroll(function() {
+        showImages('article img');
+    });
+    </script>
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -66,7 +86,7 @@ First, an animation of station activity during a random summer d">
             <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="https://notes.mikejarrett.ca/">
-                <img src="https://data.mikejarrett.ca/images/logo-rect.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
+                <img src="../images/logo-rect.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
             </a>
         </div>
 <!-- /.navbar-header -->
@@ -123,7 +143,18 @@ First, an animation of station activity during a random summer d">
         </div>
         
 
-    </header><div class="e-content entry-content" itemprop="articleBody text">
+    </header><div>
+
+
+
+
+
+
+<form id="toggle-button" action="javascript:code_toggle()"><input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."></form>
+    </div>
+    
+
+    <div class="e-content entry-content" itemprop="articleBody text">
     <div>
 <p></p>
 <p>I finally got around to learning how to map data on to maps with Cartopy, so here's some quick maps of Mobi bikeshare station activity.</p>

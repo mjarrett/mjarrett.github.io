@@ -51,7 +51,7 @@
             <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="https://notes.mikejarrett.ca/">
-                <img src="https://data.mikejarrett.ca/images/logo-rect.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
+                <img src="images/logo-rect.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
             </a>
         </div>
 <!-- /.navbar-header -->
@@ -86,7 +86,85 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="matplotlib-on-the-web/" class="u-url">Matplotlib on the web</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="machine-learning-with-vancouver-bike-share-data/" class="u-url">Machine learning with Vancouver bike share data</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Mike Jarrett
+            </span></p>
+            <p class="dateline">
+            <a href="machine-learning-with-vancouver-bike-share-data/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-10-23T05:00:19-07:00" itemprop="datePublished" title="2017-10-23 05:00">2017-10-23 05:00</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="machine-learning-with-vancouver-bike-share-data/#disqus_thread" data-disqus-identifier="cache/posts/machine-learning-with-vancouver-bike-share-data.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div>
+<p></p>
+<p>Six months ago I came across Jake VanderPlas' blog post <a href="https://jakevdp.github.io/blog/2015/07/23/learning-seattles-work-habits-from-bicycle-counts/">examining Seattle bike commuting habits through bike trip data</a>. I wanted to try to recreate it for Vancouver, but the city doesn't publish detailed bike trip data, just monthly numbers. For plan B, I looked into Mobi bike share data. But still no published data! Luckily, Mobi does publish an API with the number of bike at each station. It doesn't give trip information, but it's a start.</p>
+<!--more-->
+
+<p><em>All the code needed to recreate this post is available on <a href="https://github.com/mjarrett/mobi">my github page</a>.</em>
+</p>
+<h3>Data Acquisition</h3>
+The first problem was to read the API and take a guess at station activity. To do this, I query the API every minute. Whenever the bike count at a station changes, this is counted as bikes being taken out or returned. I don't know exactly how often Mobi updates this API, but I'm certainly undercounting activity -- whenever two people return a bike and take a bike within a minute or so of each other I'll miss the activity. But it's good enough for my purposes, and I'm more interested in trends than total numbers anyway.
+<p>I had two main problems querying the API: First, I'd starting by running the query script on my home machine. This meant that any computer downtime meant missing data. There's a few days missing while I updated my computer. Eventually I migrated to a google cloud server, so downtime is no longer an issue, but this introduced the second problem: time zones. I hadn't set a time zone for my new server, so all the times were recorded as UTC, while earlier data had been recorded in local Vancouver time. It took a long time of staring at the data wondering why it didn't make sense for me to realize what had happened, but luckily an easy fix in Pandas.
+</p>
+<h3>Analysis</h3>
+<img class="aligncenter wp-image-168 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/hourly_usage_may-sep.png" alt="" width="640" height="480"><p>Our long stretch of good weather this summer is visible in the data. Usage was pretty consistent over July and August, and began to fall off near the end of September when the weather turned. I'll be looking more into the relationship between weather and bike usage once I have more off-season data, but for now I'm more interested in zooming in and looking at daily usage patterns. Looking at a typical week in mid summer, we see weekdays showing a typical commuter pattern with morning and evening peaks and a midday lull. One thing that jumps out is the afternoon peak being consistently larger than the morning peak. With bike share, people have the option to take the bus to work in the morning and then pick up a bike afterwork if they're in the mood. Weekends lose that bimodal distribution and show a single normal distribution centered in the afternoon. On most weekend days and some weekdays, there is a shoulder or very minor peak visible in the late evening, presumably people heading home from a night out.</p>
+<p><img class="aligncenter wp-image-166 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/weekdata-2017-07-31-2017-08-06.png" alt="" width="640" height="480"></p>
+<p>Looking at the next week, Monday immediately jumps out as showing a weekend pattern instead of a weekday. That Monday, of course, is the Monday of the August long weekend.</p>
+<p><img class="aligncenter wp-image-167 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/weekdata-2017-08-07-2017-08-13.png" alt="" width="640" height="480"></p>
+<p>So, by eye we can fairly easily distinguish weekday and weekend travel patterns. How can we train a computer to do the same?</p>
+<p>First, I pivoted my data such that each row is a day, and each column is the hourly bike activity at each station (# columns = # stations * 24). I decided to keep the station information instead of summing across stations, but both give about the same result. This was provided as input to the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html">primary component analysis (PCA) class of the Scikit-Learn Python package</a>. PCA attempts to reduce the dimensionality of a data set (in our case, columns) while preserving the variance. For visualization, we can plot our data based on the the two components which most explain the variance in the data. Each point is a single day, colour labelled by total number of trips that day.</p>
+<p><img class="wp-image-192 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_numtrips-2.png" alt="" width="640" height="480"> PCA coloured by number of daily trips</p>
+<p>It's apparent that the first component (along the X axis) corresponds roughly (but not exactly) to total number of trips. But what does the Y axis represent? To investigate further, we label the data points by day of week.</p>
+<p><img class="wp-image-191 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_dayofweek-2.png" alt="" width="640" height="480"> PCA coloured by day of week</p>
+<p>The pattern is immediately clear. Weekdays are clustered at the bottom of our plot, and weekends are clustered at the top. A few outliers jump out. There are 3 Mondays clustered in with the weekend group. These turn out to be the Canada Day, BC Day and Labour Day stat holidays.</p>
+<p><img class="wp-image-190 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_dayofweek_mondays-2.png" alt="" width="640" height="480"> PCA with noteable Mondays labelled</p>
+<p>Finally, I wanted to try unsupervised clustering to see if weekday and weekend clusters are separated enough to be distinguished automatically. For this, I used the <a href="http://scikit-learn.org/stable/modules/mixture.html">GaussianMixture class from Scikit-learn</a>. Here, we try to automatically split our data into a given number of groups, in this case two.</p>
+<p><img class="wp-image-193 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_clustering-2.png" alt="" width="640" height="480"> PCA and unsupervised clustering of June-September bike share usage</p>
+<p>Not quite. There is a group of low-volume weekend days in the top right cornerthat can't be automatically distinguished from weekdays. All these days are in June and September. Maybe with more non-summer data this will resolve itself.</p>
+<p>Out of curiosity, I re-ran the PCA and unsupervised clustering with only peak season data (July and August). Here, with more a more homogenous dataset, clustering works much better. In fact, only the first component (plotted along the X axis) is needed to distinguish between usage patterns.</p>
+<p><img class="wp-image-194 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_clustering-3.png" alt="" width="640" height="480"> PCA and unsupervised clustering of July and August bike share usage</p>
+<p>Bike share usage will obviously decline during Vancouver's wet season, but I'm very interested to see how usage patterns will differ during the lower volume months.</p>
+<p><em>All the source code used for data acquisition and analysis in this post is available on my <a href="https://github.com/mjarrett/mobi">github page</a>.</em></p>
+<p><em>To see more posts like this, follow me on twitter <a href="https://twitter.com/MikeJarrett_">@MikeJarrett_</a>.</em></p>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="140/" class="u-url">Datetime axis formatting with Pandas and matplotlib</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Mike Jarrett
+            </span></p>
+            <p class="dateline">
+            <a href="140/" rel="bookmark">
+            <time class="published dt-published" datetime="2017-05-26T22:08:36-07:00" itemprop="datePublished" title="2017-05-26 22:08">2017-05-26 22:08</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="140/#disqus_thread" data-disqus-identifier="cache/posts/140.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div>
+<p></p>
+<p>Panda's Dataframe.plot() function is handy, but sometimes I run up against edge cases and spend too much time trying to fix them.</p>
+<p>On one case recently, I wanted to overlay a line plot on top of a bar plot. Easy, right? Not when your dataframe has a datetime axis. The bar plot and and line plot functions format the x-axis date labels differently, and cause chaos when you try to use them on the same axes. None of the usual tick label formatting methods got me back anything useable.</p>
+<!--more-->
+
+<p>The solution was to take a step back and use the basic matplotlib functions to plot instead of the pandas wrappers. Calling ax.plot() and ax.bar() give sensible outputs where df.plot() didn't.</p>
+<p>See the below notebook for an example of the problem and solution.</p>
+<script src="https://gist.github.com/mjarrett/72ac77d80e50f32f020ca1abee5bdc49.js"></script><p></p>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="matplotlib-on-the-web/" class="u-url">Matplotlib on the web</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Mike Jarrett
