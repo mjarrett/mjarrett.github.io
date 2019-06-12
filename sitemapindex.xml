@@ -7,62 +7,62 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/bikes.xml</loc>
-  <lastmod>2019-01-14T05:05:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/bikeshare.xml</loc>
-  <lastmod>2019-01-07T04:14:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/datavis.xml</loc>
-  <lastmod>2019-01-14T05:05:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/jupyter.xml</loc>
-  <lastmod>2019-01-20T17:56:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/matplotlib.xml</loc>
-  <lastmod>2019-01-07T04:14:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/mobi.xml</loc>
-  <lastmod>2019-01-14T05:05:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/nikola.xml</loc>
-  <lastmod>2019-01-20T17:56:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/python.xml</loc>
-  <lastmod>2019-01-07T04:14:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/science.xml</loc>
-  <lastmod>2019-01-07T04:14:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/theme.xml</loc>
-  <lastmod>2019-01-20T17:56:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/vancouver.xml</loc>
-  <lastmod>2019-01-07T04:14:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/galleries/demo/rss.xml</loc>
-  <lastmod>2019-01-31T21:18:00Z</lastmod>
+  <lastmod>2019-06-12T23:17:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/galleries/rss.xml</loc>
-  <lastmod>2019-01-31T21:18:00Z</lastmod>
+  <lastmod>2019-06-12T23:17:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/rss.xml</loc>
-  <lastmod>2019-02-17T17:21:00Z</lastmod>
+  <lastmod>2019-06-12T23:14:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/sitemap.xml</loc>
-  <lastmod>2019-02-17T17:21:00Z</lastmod>
+  <lastmod>2019-06-12T23:18:00Z</lastmod>
  </sitemap>
 </sitemapindex>
