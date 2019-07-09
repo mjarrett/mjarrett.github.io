@@ -151,8 +151,8 @@ NAVIGATION_ALT_LINKS = {
 
 # Name of the theme to use.
 #THEME = "bootblog4"
-THEME = "lanyon"
-#THEME = "bootyper"
+#THEME = "lanyon"
+THEME = "bootyper"
 
 # Primary color of your theme. This will be used to customize your theme.
 # Must be a HEX value.
@@ -220,8 +220,7 @@ POSTS = (
     ("posts/*.md", "", "post.tmpl"),
     ("posts/*.txt", "", "post.tmpl"),
     ("posts/*.html", "", "post.tmpl"),
-    ("posts/*.ipynb", "", "post.tmpl"),
-    
+    ("posts/*.ipynb", "", "post_ipynb.tmpl"),
 )
 PAGES = (
     ("pages/*.rst", "", "page.tmpl"),
