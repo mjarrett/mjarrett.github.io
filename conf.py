@@ -227,7 +227,7 @@ PAGES = (
     ("pages/*.md", "", "page.tmpl"),
     ("pages/*.txt", "", "page.tmpl"),
     ("pages/*.html", "", "page.tmpl"),
-    ("pages/*.ipynb", "", "post.tmpl"),
+    ("pages/*.ipynb", "", "post_ipynb.tmpl"),
 )
 
 
