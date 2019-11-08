@@ -1231,6 +1231,7 @@ EXTRA_HEAD_DATA = """<meta property="og:image" content="https://data.mikejarrett
 </script>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
 
 """
