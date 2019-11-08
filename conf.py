@@ -1228,7 +1228,12 @@ EXTRA_HEAD_DATA = """<meta property="og:image" content="https://data.mikejarrett
   gtag('js', new Date());
 
   gtag('config', 'UA-132843241-1');
-</script>"""
+</script>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+"""
 # Google Analytics or whatever else you use. Added to the bottom of <body>
 # in the default template (base.tmpl).
 # (translatable)
