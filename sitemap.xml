@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://notes.mikejarrett.ca/</loc>
-  <lastmod>2019-10-01T21:37:00Z</lastmod>
+  <lastmod>2019-11-08T16:32:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/140/</loc>
@@ -180,6 +180,10 @@
  <url>
   <loc>https://notes.mikejarrett.ca/path-handlers/</loc>
   <lastmod>2019-06-12T23:14:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/plotly-test/</loc>
+  <lastmod>2019-11-08T16:32:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/quickref/</loc>
