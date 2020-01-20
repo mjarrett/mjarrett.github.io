@@ -528,3 +528,5 @@
 'scale_images:output/images/apple-touch-icon-57x57.png', (3104768, 245)
 'scale_images:output/images/apple-touch-icon-72x72.png', (3105280, 245)
 'scale_images:output/images/apple-touch-icon-120x120.png', (3105792, 250)
+'render_taxonomies:output/categories/cat_mobi.xml', (3106304, 651)
+'render_taxonomies:output/categories/cat_mobi/index.html', (3127808, 2005)
