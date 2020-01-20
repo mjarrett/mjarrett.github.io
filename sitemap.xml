@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://notes.mikejarrett.ca/</loc>
-  <lastmod>2019-11-08T17:29:00Z</lastmod>
+  <lastmod>2020-01-20T01:13:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/140/</loc>
@@ -26,6 +26,10 @@
   <lastmod>2019-06-12T23:14:00Z</lastmod>
  </url>
  <url>
+  <loc>https://notes.mikejarrett.ca/2020/</loc>
+  <lastmod>2020-01-20T01:13:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://notes.mikejarrett.ca/a-jupyter-friendly-nikola-theme/</loc>
   <lastmod>2019-06-12T23:14:00Z</lastmod>
  </url>
@@ -39,7 +43,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/archive.html</loc>
-  <lastmod>2019-11-08T18:13:00Z</lastmod>
+  <lastmod>2020-01-20T01:13:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/bootstrap-demo/</loc>
@@ -131,7 +135,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/index-1.html</loc>
-  <lastmod>2019-11-08T18:13:00Z</lastmod>
+  <lastmod>2020-01-20T01:13:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/internals/</loc>
@@ -147,7 +151,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/listings/hello.py.html</loc>
-  <lastmod>2019-11-08T18:12:00Z</lastmod>
+  <lastmod>2020-01-20T01:13:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/machine-learning-with-vancouver-bike-share-data/</loc>
@@ -212,6 +216,10 @@
  <url>
   <loc>https://notes.mikejarrett.ca/theming/</loc>
   <lastmod>2019-06-12T23:14:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/tracking-bikeshare-use-using-gbfs-feeds/</loc>
+  <lastmod>2020-01-20T01:13:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/what-really-affects-bikeshare-use-in-vancouver/</loc>

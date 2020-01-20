@@ -34,7 +34,7 @@
   gtag('js', new Date());
 
   gtag('config', 'UA-132843241-1');
-</script><script src="https://cdn.plot.ly/plotly-latest.min.js"></script><link rel="prefetch" href="mapping-vancouvers-buses/" type="text/html">
+</script><script src="https://cdn.plot.ly/plotly-latest.min.js"></script><link rel="prefetch" href="tracking-bikeshare-use-using-gbfs-feeds/" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -51,7 +51,7 @@
             <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="https://notes.mikejarrett.ca/">
-                <img src="images/logo-rect.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
+                <img src="images/logo.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
             </a>
         </div>
 <!-- /.navbar-header -->
@@ -86,7 +86,53 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="mapping-vancouvers-buses/" class="u-url">Mapping Vancouver's Buses</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="tracking-bikeshare-use-using-gbfs-feeds/" class="u-url">Tracking bikeshare use using GBFS feeds</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Mike Jarrett
+            </span></p>
+            <p class="dateline">
+            <a href="tracking-bikeshare-use-using-gbfs-feeds/" rel="bookmark">
+            <time class="published dt-published" datetime="2020-01-19T17:12:56-08:00" itemprop="datePublished" title="2020-01-19 17:12">2020-01-19 17:12</time></a>
+            </p>
+                <p class="commentline">
+        
+    <a href="tracking-bikeshare-use-using-gbfs-feeds/#disqus_thread" data-disqus-identifier="cache/posts/tracking-bikeshare-use-using-gbfs-feeds.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="p-summary entry-summary">
+    <div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="https://github.com/NABSA/gbfs">General Bikeshare Feed Specification (GBFS)</a> is a popular standard for publishing live data about bikeshare systems used by systems <a href="https://github.com/NABSA/gbfs/blob/master/systems.csv">around the globe</a>. Its stated purpose is to allow 3rd party applications to interface with the live data and allow municipalities to monitor compliance with local regulations. For my purpose, it also allows me to monitor system usage in real time. Here I'll go through the steps I use to track bikeshare usage in real time using GBFS feeds. I currently publish live tracking of Vancouver bikeshare systems at <a href="http://twitter.com/vanbikesharebot">@VanBikeShareBot</a> and will soon be adding tracking of Toronto, Hamilton and Montreal systems.</p>
+<p>I've bundled the tools I use for GBFS monitoring into a python package that can be <a href="https://github.com/mjarrett/bikedata">found on Github</a>. The Bikedata package is not a full-service GBFS client -- for that, you might prefer <a href="https://pypi.org/project/gbfs-client/">GBFS-client</a>. Bikedata provides minimal functionality for querying GBFS feeds and returning Pandas dataframes, and implements some helper functions for persistent monitoring of bikeshare systems.</p>
+<h3 id="The-GBFS-spec">The GBFS spec<a class="anchor-link" href="tracking-bikeshare-use-using-gbfs-feeds/#The-GBFS-spec">¶</a>
+</h3>
+<p>I won't go into detail about the GBFS spec, more information can be found on the project's <a href="https://github.com/NABSA/gbfs">Github page</a>. Suffice to say that a GBFS complient system offers several distinct JSON endpoints that provide information about the system. For example, Mobi Bikes in Vancouver provides:</p>
+<ul>
+<li>
+<a href="https://vancouver-gbfs.smoove.pro/gbfs/gbfs.json">https://vancouver-gbfs.smoove.pro/gbfs/gbfs.json</a>: A list of available feeds</li>
+<li>
+<a href="https://vancouver-gbfs.smoove.pro/gbfs/en/system_information.json">https://vancouver-gbfs.smoove.pro/gbfs/en/system_information.json</a>: General system information</li>
+<li>
+<a href="https://vancouver-gbfs.smoove.pro/gbfs/en/station_information.json">https://vancouver-gbfs.smoove.pro/gbfs/en/station_information.json</a>: Details about stations (short and long names, location, coordinates)</li>
+<li>
+<a href="https://vancouver-gbfs.smoove.pro/gbfs/en/station_status.json">https://vancouver-gbfs.smoove.pro/gbfs/en/station_status.json</a>: Live status of stations (bikes available, free docks)</li>
+</ul>
+<p>Mobi doesn't have free floating bikes, but systems that do also have a <code>free_bikes.json</code> feed providing the location of available free floating bikes.</p>
+<h3 id="Tracking-station-based-systems">Tracking station-based systems<a class="anchor-link" href="tracking-bikeshare-use-using-gbfs-feeds/#Tracking-station-based-systems">¶</a>
+</h3>
+<p>Many bikeshare systems, especially those in dense city centres, only allow trips to begin and end at physical stations. To monitor these systems, I periodically query the <code>station_status.json</code> and record the number of bikes at each station. If the number of available bikes decreases by N, I count that as N departures from the station. If it increases by M, I count that as M bikes returned.</p>
+<p class="more"><a href="tracking-bikeshare-use-using-gbfs-feeds/">Read more…</a></p>
+</div>
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="mapping-vancouvers-buses/" class="u-url">Mapping Vancouver's Buses</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Mike Jarrett
@@ -423,56 +469,6 @@ The coefficients associated with the days of the week can be interpreted as the 
 <p><em>To see more posts like this, follow me on twitter <a href="https://twitter.com/mikejarrett_">@mikejarrett_</a>.</em></p>
 </div>
     </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="machine-learning-with-vancouver-bike-share-data/" class="u-url">Machine learning with Vancouver bike share data</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="machine-learning-with-vancouver-bike-share-data/" rel="bookmark">
-            <time class="published dt-published" datetime="2017-10-23T05:00:19-07:00" itemprop="datePublished" title="2017-10-23 05:00">2017-10-23 05:00</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="machine-learning-with-vancouver-bike-share-data/#disqus_thread" data-disqus-identifier="cache/posts/machine-learning-with-vancouver-bike-share-data.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div>
-<p></p>
-<p>Six months ago I came across Jake VanderPlas' blog post <a href="https://jakevdp.github.io/blog/2015/07/23/learning-seattles-work-habits-from-bicycle-counts/">examining Seattle bike commuting habits through bike trip data</a>. I wanted to try to recreate it for Vancouver, but the city doesn't publish detailed bike trip data, just monthly numbers. For plan B, I looked into Mobi bike share data. But still no published data! Luckily, Mobi does publish an API with the number of bike at each station. It doesn't give trip information, but it's a start.</p>
-<!--more-->
-
-<p><em>All the code needed to recreate this post is available on <a href="https://github.com/mjarrett/mobi">my github page</a>.</em>
-</p>
-<h3>Data Acquisition</h3>
-The first problem was to read the API and take a guess at station activity. To do this, I query the API every minute. Whenever the bike count at a station changes, this is counted as bikes being taken out or returned. I don't know exactly how often Mobi updates this API, but I'm certainly undercounting activity -- whenever two people return a bike and take a bike within a minute or so of each other I'll miss the activity. But it's good enough for my purposes, and I'm more interested in trends than total numbers anyway.
-<p>I had two main problems querying the API: First, I'd starting by running the query script on my home machine. This meant that any computer downtime meant missing data. There's a few days missing while I updated my computer. Eventually I migrated to a google cloud server, so downtime is no longer an issue, but this introduced the second problem: time zones. I hadn't set a time zone for my new server, so all the times were recorded as UTC, while earlier data had been recorded in local Vancouver time. It took a long time of staring at the data wondering why it didn't make sense for me to realize what had happened, but luckily an easy fix in Pandas.
-</p>
-<h3>Analysis</h3>
-<img class="aligncenter wp-image-168 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/hourly_usage_may-sep.png" alt="" width="640" height="480"><p>Our long stretch of good weather this summer is visible in the data. Usage was pretty consistent over July and August, and began to fall off near the end of September when the weather turned. I'll be looking more into the relationship between weather and bike usage once I have more off-season data, but for now I'm more interested in zooming in and looking at daily usage patterns. Looking at a typical week in mid summer, we see weekdays showing a typical commuter pattern with morning and evening peaks and a midday lull. One thing that jumps out is the afternoon peak being consistently larger than the morning peak. With bike share, people have the option to take the bus to work in the morning and then pick up a bike afterwork if they're in the mood. Weekends lose that bimodal distribution and show a single normal distribution centered in the afternoon. On most weekend days and some weekdays, there is a shoulder or very minor peak visible in the late evening, presumably people heading home from a night out.</p>
-<p><img class="aligncenter wp-image-166 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/weekdata-2017-07-31-2017-08-06.png" alt="" width="640" height="480"></p>
-<p>Looking at the next week, Monday immediately jumps out as showing a weekend pattern instead of a weekday. That Monday, of course, is the Monday of the August long weekend.</p>
-<p><img class="aligncenter wp-image-167 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/weekdata-2017-08-07-2017-08-13.png" alt="" width="640" height="480"></p>
-<p>So, by eye we can fairly easily distinguish weekday and weekend travel patterns. How can we train a computer to do the same?</p>
-<p>First, I pivoted my data such that each row is a day, and each column is the hourly bike activity at each station (# columns = # stations * 24). I decided to keep the station information instead of summing across stations, but both give about the same result. This was provided as input to the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html">primary component analysis (PCA) class of the Scikit-Learn Python package</a>. PCA attempts to reduce the dimensionality of a data set (in our case, columns) while preserving the variance. For visualization, we can plot our data based on the the two components which most explain the variance in the data. Each point is a single day, colour labelled by total number of trips that day.</p>
-<p><img class="wp-image-192 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_numtrips-2.png" alt="" width="640" height="480"> PCA coloured by number of daily trips</p>
-<p>It's apparent that the first component (along the X axis) corresponds roughly (but not exactly) to total number of trips. But what does the Y axis represent? To investigate further, we label the data points by day of week.</p>
-<p><img class="wp-image-191 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_dayofweek-2.png" alt="" width="640" height="480"> PCA coloured by day of week</p>
-<p>The pattern is immediately clear. Weekdays are clustered at the bottom of our plot, and weekends are clustered at the top. A few outliers jump out. There are 3 Mondays clustered in with the weekend group. These turn out to be the Canada Day, BC Day and Labour Day stat holidays.</p>
-<p><img class="wp-image-190 size-full" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_dayofweek_mondays-2.png" alt="" width="640" height="480"> PCA with noteable Mondays labelled</p>
-<p>Finally, I wanted to try unsupervised clustering to see if weekday and weekend clusters are separated enough to be distinguished automatically. For this, I used the <a href="http://scikit-learn.org/stable/modules/mixture.html">GaussianMixture class from Scikit-learn</a>. Here, we try to automatically split our data into a given number of groups, in this case two.</p>
-<p><img class="wp-image-193 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_clustering-2.png" alt="" width="640" height="480"> PCA and unsupervised clustering of June-September bike share usage</p>
-<p>Not quite. There is a group of low-volume weekend days in the top right cornerthat can't be automatically distinguished from weekdays. All these days are in June and September. Maybe with more non-summer data this will resolve itself.</p>
-<p>Out of curiosity, I re-ran the PCA and unsupervised clustering with only peak season data (July and August). Here, with more a more homogenous dataset, clustering works much better. In fact, only the first component (plotted along the X axis) is needed to distinguish between usage patterns.</p>
-<p><img class="wp-image-194 size-full" src="http://mikejarrett.ca/blog/wp-content/uploads/PCA_clustering-3.png" alt="" width="640" height="480"> PCA and unsupervised clustering of July and August bike share usage</p>
-<p>Bike share usage will obviously decline during Vancouver's wet season, but I'm very interested to see how usage patterns will differ during the lower volume months.</p>
-<p><em>All the source code used for data acquisition and analysis in this post is available on my <a href="https://github.com/mjarrett/mobi">github page</a>.</em></p>
-<p><em>To see more posts like this, follow me on twitter <a href="https://twitter.com/MikeJarrett_">@MikeJarrett_</a>.</em></p>
-</div>
-    </div>
     </article>
 </div>
 
@@ -487,7 +483,7 @@ The first problem was to read the API and take a guess at station activity. To d
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2019         <a href="mailto:mike@mikejarrett.ca">Mike Jarrett</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2020         <a href="mailto:mike@mikejarrett.ca">Mike Jarrett</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
 </div>
