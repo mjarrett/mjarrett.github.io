@@ -7,19 +7,19 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/bikes.xml</loc>
-  <lastmod>2020-01-20T03:10:00Z</lastmod>
+  <lastmod>2020-02-14T17:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/bikeshare.xml</loc>
-  <lastmod>2020-01-20T03:10:00Z</lastmod>
+  <lastmod>2020-01-20T03:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/cat_mobi.xml</loc>
-  <lastmod>2020-01-20T03:10:00Z</lastmod>
+  <lastmod>2020-01-20T03:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/datavis.xml</loc>
-  <lastmod>2019-06-12T23:14:00Z</lastmod>
+  <lastmod>2020-02-14T17:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/jupyter.xml</loc>
@@ -31,7 +31,7 @@
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/mobi.xml</loc>
-  <lastmod>2020-01-20T03:10:00Z</lastmod>
+  <lastmod>2020-02-14T17:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/nikola.xml</loc>
@@ -39,7 +39,7 @@
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/python.xml</loc>
-  <lastmod>2020-01-20T03:10:00Z</lastmod>
+  <lastmod>2020-01-20T03:16:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/categories/science.xml</loc>
@@ -55,18 +55,18 @@
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/galleries/demo/rss.xml</loc>
-  <lastmod>2020-01-20T01:13:00Z</lastmod>
+  <lastmod>2020-02-14T17:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/galleries/rss.xml</loc>
-  <lastmod>2020-01-20T01:13:00Z</lastmod>
+  <lastmod>2020-02-14T17:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/rss.xml</loc>
-  <lastmod>2020-01-20T03:10:00Z</lastmod>
+  <lastmod>2020-02-14T17:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://notes.mikejarrett.ca/sitemap.xml</loc>
-  <lastmod>2020-01-20T03:10:00Z</lastmod>
+  <lastmod>2020-02-14T17:40:00Z</lastmod>
  </sitemap>
 </sitemapindex>
