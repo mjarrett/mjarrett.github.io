@@ -139,6 +139,9 @@ NAVIGATION_LINKS = {
         ("/archive.html", "Archive"),
         ("/categories/", "Tags"),
         ("/about-me/", "About"),
+        ((("https://twitter.com/vanbikesharebot","@VanBikeShareBot"),
+         ("https://bikedata.mikejarrett.ca","BikeData Vancouver")),
+          "Projects"),
         #("/rss.xml", "RSS feed"),
     ),
 }

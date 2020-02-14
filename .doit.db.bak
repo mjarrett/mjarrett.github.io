@@ -141,7 +141,6 @@
 'copy_assets:output/assets/js/jquery.min.map', (261120, 297)
 'copy_assets:output/assets/fonts/glyphicons-halflings-regular.svg', (261632, 338)
 'copy_assets:output/assets/css/bootstrap.min.css.map', (262144, 312)
-'render_taxonomies:output/archive.html', (2720768, 4673)
 'copy_files:output/CNAME', (443904, 230)
 'render_galleries:output/galleries/index.html', (2991616, 8135)
 'render_taxonomies:output/categories/science/index.html', (2522112, 7653)
@@ -531,3 +530,4 @@
 'render_taxonomies:output/categories/cat_mobi.xml', (3106304, 651)
 'render_taxonomies:output/categories/cat_mobi/index.html', (3127808, 2005)
 'render_sources:output/about-me/index.md', (3169792, 240)
+'render_taxonomies:output/archive.html', (3170304, 1666)
