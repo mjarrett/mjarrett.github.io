@@ -44,7 +44,7 @@
 'copy_assets:output/assets/js/jquery.min.js', (2403328, 636)
 'render_listings:output/listings/hello.py.html', (2980864, 5107)
 'render_taxonomies:output/categories/cat_nikola/index.html', (317952, 2067)
-'sitemap:output/sitemap.xml', (3153408, 16257)
+'sitemap:output/sitemap.xml', (3153408, 16255)
 'copy_assets:output/assets/css/nikola_rst.css', (2393088, 573)
 'render_sources:output/pages/quickstart/index.rst', (65536, 248)
 'scale_images', (66048, 56)
