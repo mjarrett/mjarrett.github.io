@@ -2,39 +2,47 @@
 <html prefix="og: http://ogp.me/ns# " lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Mike Jarrett's Blog">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mike Jarrett</title>
-<link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<link href="assets/css/ipython.min.css" rel="stylesheet" type="text/css">
-<link href="assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
+<title>Mobi Station Networks | Mike Jarrett</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
-<link rel="canonical" href="https://notes.mikejarrett.ca/">
-<link rel="icon" href="images/favicon.ico" sizes="16x16">
-<link rel="apple-touch-icon" href="images/apple-icon-57x57.png" sizes="57x57">
-<link rel="apple-touch-icon" href="images/apple-icon-60x60.png" sizes="60x60">
-<link rel="apple-touch-icon" href="images/apple-icon-72x72.png" sizes="72x72">
-<link rel="apple-touch-icon" href="images/apple-icon-76x76.png" sizes="76x76">
-<link rel="apple-touch-icon" href="images/apple-icon-114x114.png" sizes="114x114">
-<link rel="apple-touch-icon" href="images/apple-icon-120x120.png" sizes="120x120">
-<link rel="apple-touch-icon" href="images/apple-icon-144x144.png" sizes="144x144">
-<link rel="apple-touch-icon" href="images/apple-icon-152x152.png" sizes="152x152">
-<link rel="apple-touch-icon" href="images/apple-icon-180x180.png" sizes="180x180">
-<link rel="icon" href="images/android-icon-192x192.png" sizes="192x192">
-<link rel="icon" href="images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" href="images/favicon-96x96.png" sizes="96x96">
-<link rel="icon" href="images/favicon-16x16.png" sizes="16x16">
-<link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><meta property="og:image" content="https://data.mikejarrett.ca/images/logo.png">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
+<link rel="canonical" href="https://notes.mikejarrett.ca/mobi-station-networks/">
+<link rel="icon" href="../images/favicon.ico" sizes="16x16">
+<link rel="apple-touch-icon" href="../images/apple-icon-57x57.png" sizes="57x57">
+<link rel="apple-touch-icon" href="../images/apple-icon-60x60.png" sizes="60x60">
+<link rel="apple-touch-icon" href="../images/apple-icon-72x72.png" sizes="72x72">
+<link rel="apple-touch-icon" href="../images/apple-icon-76x76.png" sizes="76x76">
+<link rel="apple-touch-icon" href="../images/apple-icon-114x114.png" sizes="114x114">
+<link rel="apple-touch-icon" href="../images/apple-icon-120x120.png" sizes="120x120">
+<link rel="apple-touch-icon" href="../images/apple-icon-144x144.png" sizes="144x144">
+<link rel="apple-touch-icon" href="../images/apple-icon-152x152.png" sizes="152x152">
+<link rel="apple-touch-icon" href="../images/apple-icon-180x180.png" sizes="180x180">
+<link rel="icon" href="../images/android-icon-192x192.png" sizes="192x192">
+<link rel="icon" href="../images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="../images/favicon-96x96.png" sizes="96x96">
+<link rel="icon" href="../images/favicon-16x16.png" sizes="16x16">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta property="og:image" content="https://data.mikejarrett.ca/images/logo.png">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-132843241-1"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'UA-132843241-1');
-</script><script src="https://cdn.plot.ly/plotly-latest.min.js"></script><link rel="prefetch" href="mobi-station-networks/" type="text/html">
+</script><script src="https://cdn.plot.ly/plotly-latest.min.js"></script><meta name="author" content="Mike Jarrett">
+<link rel="prev" href="../tracking-bikeshare-use-using-gbfs-feeds/" title="Tracking bikeshare use using GBFS feeds" type="text/html">
+<meta property="og:site_name" content="Mike Jarrett">
+<meta property="og:title" content="Mobi Station Networks">
+<meta property="og:url" content="https://notes.mikejarrett.ca/mobi-station-networks/">
+<meta property="og:description" content="I've started wondering if there are any network effects in Mobi trip data. I don't know much about network analysis, but luckily there are python packages to do the work for me: NetworkX provides gene">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2020-02-17T11:43:55-08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@mikejarrett_">
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script><script src="../assets/js/bootyper.js"></script><link rel="stylesheet" href="../assets/css/bootyper.css">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -51,20 +59,20 @@
             <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="https://notes.mikejarrett.ca/">
-                <img src="images/logo.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
+                <img src="../images/logo.png" alt="Mike Jarrett" id="logo"><span id="blog-title">Mike Jarrett</span>
             </a>
         </div>
 <!-- /.navbar-header -->
         <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
 <li>
-<a href="archive.html">Archive</a>
+<a href="../archive.html">Archive</a>
                 </li>
 <li>
-<a href="categories/">Tags</a>
+<a href="../categories/">Tags</a>
                 </li>
 <li>
-<a href="about-me/">About</a>
+<a href="../about-me/">About</a>
             </li>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <b class="caret"></b></a>
@@ -81,7 +89,13 @@
 </ul>
 </li>
 </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.ipynb" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
 </div>
 <!-- /.navbar-collapse -->
     </div>
@@ -92,29 +106,77 @@
         <div class="row">
             
             
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Mobi Station Networks</a></h1>
 
-    
-
-
-    
-<div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="mobi-station-networks/" class="u-url">Mobi Station Networks</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
+                    Mike Jarrett
             </span></p>
             <p class="dateline">
-            <a href="mobi-station-networks/" rel="bookmark">
+            <a href="." rel="bookmark">
             <time class="published dt-published" datetime="2020-02-17T11:43:55-08:00" itemprop="datePublished" title="2020-02-17 11:43">2020-02-17 11:43</time></a>
             </p>
                 <p class="commentline">
         
-    <a href="mobi-station-networks/#disqus_thread" data-disqus-identifier="cache/posts/mobi-station-networks.html">Comments</a>
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/mobi-station-networks.html">Comments</a>
 
 
+            
         </p>
-</div>
-    </header><div class="p-summary entry-summary">
+<p class="sourceline"><a href="index.ipynb" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div>
+
+
+
+<script>
+
+//console.log(code_show);
+//
+//if (typeof code_show == 'undefined') {
+//    code_show = true
+//  } else {
+//    code_show = false
+//    }
+//
+//console.log(code_show);
+
+
+//function code_toggle() {
+//    console.log('code_toggle');
+//    console.log(code_show);	
+//
+// if (!code_show){
+// $('div.input').hide();
+// $('div.prompt.output_prompt').hide();
+// } else {
+// $('div.input').show();
+// }
+// code_show = !code_show
+//}
+
+     code_show = true;
+console.log(code_show)
+$( document ).ready(toggle_setup);
+//$( document ).ready(code_toggle);
+
+// if the image in the window of browser when the page is loaded, show that image (fade in)
+$(document).ready(function(){
+        showImages('article img');
+});
+
+// if the image in the window of browser when scrolling the page, show that image
+$(window).scroll(function() {
+        showImages('article img');
+});
+</script><form id="toggle-button" action="javascript:code_toggle()"><input type="submit" class="btn btn-primary" value="Click here to toggle on/off the raw code."></form>
+    </div>
+    
+
+    <div class="e-content entry-content" itemprop="articleBody text">
     <div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -122,7 +184,7 @@
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I've started wondering if there are any network effects in Mobi trip data. I don't know much about network analysis, but luckily there are python packages to do the work for me: <a href="https://networkx.github.io/">NetworkX</a> provides general network analysis tools and basic plotting, and <a href="https://python-louvain.readthedocs.io/en/latest/api.html">Community</a> provides tools for determining clusters in a network. In this post, I'll use these tools to investigate how stations cluster together based on the frequency of trips between pairs of stations</p>
-<h3 id="Data-prep">Data prep<a class="anchor-link" href="mobi-station-networks/#Data-prep">¶</a>
+<h3 id="Data-prep">Data prep<a class="anchor-link" href="#Data-prep">¶</a>
 </h3>
 <p>Data for this post comes from Mobi Bikes' official <a href="https://www.mobibikes.ca/en/system-data">system data</a>. I've done some minimal cleaning to consolidate the data and drop spurious records. To make the data a bit more manageable, I'll only look at the summer of 2019, May through August (inclusive).</p>
 
@@ -328,7 +390,7 @@
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Build-the-network">Build the network<a class="anchor-link" href="mobi-station-networks/#Build-the-network">¶</a>
+<h3 id="Build-the-network">Build the network<a class="anchor-link" href="#Build-the-network">¶</a>
 </h3>
 <p>Now it's time to make the network. Luckily, NetworkX provides a convenience function to create a network object froma pandas dataframe. I just need to specify that the <code>Departure station</code> and <code>Return station</code> correspond to the nodes, and <code>trips</code> corresponds to the edges. In the interest of processing time, I'll only use connections that have had at least 10 trips between nodes and drop the rest.</p>
 
@@ -1183,7 +1245,7 @@ if (IPython.notebook.kernel != null) {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Partition-the-network">Partition the network<a class="anchor-link" href="mobi-station-networks/#Partition-the-network">¶</a>
+<h3 id="Partition-the-network">Partition the network<a class="anchor-link" href="#Partition-the-network">¶</a>
 </h3>
 <p>One way to look for internal structure in the network is the <a href="https://en.wikipedia.org/wiki/Louvain_modularity">Louvain method</a> for community detection, which is implemented by the python package <code>community</code> as the function <code>best_partition()</code>. According to the docs:</p>
 
@@ -3299,359 +3361,35 @@ if (IPython.notebook.kernel != null) {
 </div>
 </div>
     </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="tracking-bikeshare-use-using-gbfs-feeds/" class="u-url">Tracking bikeshare use using GBFS feeds</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="tracking-bikeshare-use-using-gbfs-feeds/" rel="bookmark">
-            <time class="published dt-published" datetime="2020-01-19T17:12:56-08:00" itemprop="datePublished" title="2020-01-19 17:12">2020-01-19 17:12</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="tracking-bikeshare-use-using-gbfs-feeds/#disqus_thread" data-disqus-identifier="cache/posts/tracking-bikeshare-use-using-gbfs-feeds.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The <a href="https://github.com/NABSA/gbfs">General Bikeshare Feed Specification (GBFS)</a> is a popular standard for publishing live data about bikeshare systems used by systems <a href="https://github.com/NABSA/gbfs/blob/master/systems.csv">around the globe</a>. Its stated purpose is to allow 3rd party applications to interface with the live data and allow municipalities to monitor compliance with local regulations. For my purpose, it also allows me to monitor system usage in real time. Here I'll go through the steps I use to track bikeshare usage in real time using GBFS feeds. I currently publish live tracking of Vancouver bikeshare systems at <a href="http://twitter.com/vanbikesharebot">@VanBikeShareBot</a> and will soon be adding tracking of Toronto, Hamilton and Montreal systems.</p>
-<p>I've bundled the tools I use for GBFS monitoring into a python package that can be <a href="https://github.com/mjarrett/bikedata">found on Github</a>. The Bikedata package is not a full-service GBFS client -- for that, you might prefer <a href="https://pypi.org/project/gbfs-client/">GBFS-client</a>. Bikedata provides minimal functionality for querying GBFS feeds and returning Pandas dataframes, and implements some helper functions for persistent monitoring of bikeshare systems.</p>
-<h3 id="The-GBFS-spec">The GBFS spec<a class="anchor-link" href="tracking-bikeshare-use-using-gbfs-feeds/#The-GBFS-spec">¶</a>
-</h3>
-<p>I won't go into detail about the GBFS spec, more information can be found on the project's <a href="https://github.com/NABSA/gbfs">Github page</a>. Suffice to say that a GBFS complient system offers several distinct JSON endpoints that provide information about the system. For example, Mobi Bikes in Vancouver provides:</p>
-<ul>
-<li>
-<a href="https://vancouver-gbfs.smoove.pro/gbfs/gbfs.json">https://vancouver-gbfs.smoove.pro/gbfs/gbfs.json</a>: A list of available feeds</li>
-<li>
-<a href="https://vancouver-gbfs.smoove.pro/gbfs/en/system_information.json">https://vancouver-gbfs.smoove.pro/gbfs/en/system_information.json</a>: General system information</li>
-<li>
-<a href="https://vancouver-gbfs.smoove.pro/gbfs/en/station_information.json">https://vancouver-gbfs.smoove.pro/gbfs/en/station_information.json</a>: Details about stations (short and long names, location, coordinates)</li>
-<li>
-<a href="https://vancouver-gbfs.smoove.pro/gbfs/en/station_status.json">https://vancouver-gbfs.smoove.pro/gbfs/en/station_status.json</a>: Live status of stations (bikes available, free docks)</li>
-</ul>
-<p>Mobi doesn't have free floating bikes, but systems that do also have a <code>free_bikes.json</code> feed providing the location of available free floating bikes.</p>
-<h3 id="Tracking-station-based-systems">Tracking station-based systems<a class="anchor-link" href="tracking-bikeshare-use-using-gbfs-feeds/#Tracking-station-based-systems">¶</a>
-</h3>
-<p>Many bikeshare systems, especially those in dense city centres, only allow trips to begin and end at physical stations. To monitor these systems, I periodically query the <code>station_status.json</code> and record the number of bikes at each station. If the number of available bikes decreases by N, I count that as N departures from the station. If it increases by M, I count that as M bikes returned.</p>
-<p class="more"><a href="tracking-bikeshare-use-using-gbfs-feeds/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="mapping-vancouvers-buses/" class="u-url">Mapping Vancouver's Buses</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="mapping-vancouvers-buses/" rel="bookmark">
-            <time class="published dt-published" datetime="2019-02-16T21:26:54-08:00" itemprop="datePublished" title="2019-02-16 21:26">2019-02-16 21:26</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="mapping-vancouvers-buses/#disqus_thread" data-disqus-identifier="cache/posts/mapping-vancouvers-buses.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>I came across <a href="https://twitter.com/realtimebus">@realtimebus</a> the other day and immediately wanted to recreate it for Vancouver. Luckily <a href="https://developer.translink.ca/">Translink has a realtime bus API</a> that I could pull from and making an animated gif is pretty straightforward in Python. And since I already have some experience making twitter bots with <a href="https://twitter.com/VanBikeShareBot">@VanBikeShareBot</a> I felt like I didn't really have a choice.</p>
-<p class="more"><a href="mapping-vancouvers-buses/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="optimizing-your-nikola-blog-for-jupyter-notebooks/" class="u-url">Optimizing your Nikola blog for Jupyter notebooks</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="optimizing-your-nikola-blog-for-jupyter-notebooks/" rel="bookmark">
-            <time class="published dt-published" datetime="2019-01-14T16:27:18-08:00" itemprop="datePublished" title="2019-01-14 16:27">2019-01-14 16:27</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="optimizing-your-nikola-blog-for-jupyter-notebooks/#disqus_thread" data-disqus-identifier="cache/posts/optimizing-your-nikola-blog-for-jupyter-notebooks.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>You've installed <a href="https://getnikola.com">Nikola</a>. You've also followed <a href="https://mglerner.github.io/posts/switching-to-nikloa-for-jupyter-notebooks-and-a-static-site.html">some instructions on how to use Jupyter notebooks as posts</a>. Everything works! But after you make your first Jupyter post, the results are... uninspiring. The input prompts are ugly. If you've written a post designed primarily for the content, not the code, there's no was to turn off showing the code cells. This post will describe how I -- someone with almost no experience with javascript, CSS, etc -- made my blog more functional to work with Jupyter notebooks.</p>
-<p class="more"><a href="optimizing-your-nikola-blog-for-jupyter-notebooks/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="connecting-neighbourhoods/" class="u-url">Connecting neighbourhoods</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="connecting-neighbourhoods/" rel="bookmark">
-            <time class="published dt-published" datetime="2019-01-13T15:08:50-08:00" itemprop="datePublished" title="2019-01-13 15:08">2019-01-13 15:08</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="connecting-neighbourhoods/#disqus_thread" data-disqus-identifier="cache/posts/connecting-neighbourhoods.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>I've been working on how best to look at connections between the various Mobi bikeshare stations throughout Vancouver. One thing the quickly became obvious was that some visualizations are much too noisy with all stations, but work nicely when I group stations into neighbourhoods. Luckily the city <a href="https://data.vancouver.ca/datacatalogue/index.htm">geometry files of the various neighourhoods available in their open data collection</a>, so I was able to use those to group the stations according to the city's official definitions. See the distributions of stations below.</p>
-<p class="more"><a href="connecting-neighbourhoods/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="how-vancouver-uses-mobi-bikes/" class="u-url">How Vancouver Uses Mobi Bikes</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="how-vancouver-uses-mobi-bikes/" rel="bookmark">
-            <time class="published dt-published" datetime="2019-01-06T18:27:37-08:00" itemprop="datePublished" title="2019-01-06 18:27">2019-01-06 18:27</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="how-vancouver-uses-mobi-bikes/#disqus_thread" data-disqus-identifier="cache/posts/how-vancouver-uses-mobi-bikes.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Vancouver's Mobi bikeshare system has been up and running for over 2 years now, and with two full summers of activity it's time to take a look at how exactly Vancouverites are using their bikeshare system.</p>
-<p>For over a year, I've been collecting real-time data about Mobi bike trips by monitoring public information about the number of bikes at each station and inferring trip activity based on changes to the number of bikes at each station. This has led to some fun uses: I have live figures updating constantly on <a href="how-vancouver-uses-mobi-bikes/data.mikejarrett.ca/mobi">my website</a>, a twitter bot tweets out daily stats at <a href="how-vancouver-uses-mobi-bikes/twitter.com/VanBikeShareBot">@VanBikeShareBot</a>, and a few <a href="http://notes.mikejarrett.ca/categories/mobi/">blog posts</a>.</p>
-<p>As handy as those live trip estimates are, they're very much estimates and only give us information about how often certain stations are used. Luckily, Mobi has started publishing open <a href="https://www.mobibikes.ca/en/system-data">system data</a>. This data set gives us a registry of every Mobi bikeshare trip since the beginning of 2017, current to the end of 2018 as of this writing. With this we have access to trip start and endpoints, trip duration and distance, membership type and more. In this post, I'll summarize some of the things I've learned after spending some time looking into this data.</p>
-<p class="more"><a href="how-vancouver-uses-mobi-bikes/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="storing-metadata-in-pandas-dataframes/" class="u-url">Storing metadata in Pandas DataFrames</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="storing-metadata-in-pandas-dataframes/" rel="bookmark">
-            <time class="published dt-published" datetime="2018-04-05T20:12:42-08:00" itemprop="datePublished" title="2018-04-05 20:12">2018-04-05 20:12</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="storing-metadata-in-pandas-dataframes/#disqus_thread" data-disqus-identifier="cache/posts/storing-metadata-in-pandas-dataframes.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>I came across a problem recently where I wanted to store metadata about each column in a pandas DataFrame. This could be done easily enough with a simple dictionary where each column name is a key, but I was hoping for something that would propogate with a DataFrame as it's sliced, copied, expanded, etc, without having to explicitely keep track of the metadata in my scripts.</p>
-<p>My solution is to use the pandas MultiIndex. In this post I'll discuss the pros and cons of this approach, show some examples, a show how I've subclassed the pandas DataFrame to make this approach easier.</p>
-<p class="more"><a href="storing-metadata-in-pandas-dataframes/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="mountain-view-cemetary-open-data/" class="u-url">Mountain View Cemetary Open Data</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="mountain-view-cemetary-open-data/" rel="bookmark">
-            <time class="published dt-published" datetime="2018-03-02T15:29:02-08:00" itemprop="datePublished" title="2018-03-02 15:29">2018-03-02 15:29</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="mountain-view-cemetary-open-data/#disqus_thread" data-disqus-identifier="cache/posts/mountain-view-cemetary-open-data.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Mountain-View-Cemetary-Open-Data">Mountain View Cemetary Open Data<a class="anchor-link" href="mountain-view-cemetary-open-data/#Mountain-View-Cemetary-Open-Data">¶</a>
-</h2>
-<p>One of my goals this year is to turn everything interesting I learn into a blog post. I've been using <a href="http://data.vancouver.ca/datacatalogue/">Vancouver's open data</a> to find datasets to play around with, and the site includes some <a href="http://data.vancouver.ca/datacatalogue/mountainViewCemeteryBurialIndex.htm">data about people interred at Mountain View Cemetary</a>. A little morbid for a data vis exercise, but I'm doing it anyways.</p>
-<p class="more"><a href="mountain-view-cemetary-open-data/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="mapping-googles-location-history-in-python/" class="u-url">Mapping Google's Location History in Python</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="mapping-googles-location-history-in-python/" rel="bookmark">
-            <time class="published dt-published" datetime="2018-01-05T19:45:54-08:00" itemprop="datePublished" title="2018-01-05 19:45">2018-01-05 19:45</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="mapping-googles-location-history-in-python/#disqus_thread" data-disqus-identifier="cache/posts/mapping-googles-location-history-in-python.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If you have an Android phone, Google is tracking your location. If you have "Location History" turned on in your settings, Google is <em>really</em> tracking your location. If you have this setting turned off, Google will still record your location when an app that has proper permission (like Google Maps or Strava) requests your location. This is creepy and probably bad from a privacy standpoint, but it's cool and fun from a data and visualisation standpoint. In the interest of blog content, I've let google track my location since I got my new phone ~1.5 years ago and it's now time to look at the data.</p>
-<p>Google offers ways to look at your location history through their apps, but it's more fun to do it myself. Through myaccount.google.com, you can create an archive of your personal information being stored by Google. You can pick which services you're interested in, but for now I'm just looking for my location history data. It takes some time for Google to create the archive and make it available for download.</p>
-<p class="more"><a href="mapping-googles-location-history-in-python/">Read more…</a></p>
-</div>
-</div>
-</div>
-    </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="what-really-affects-bikeshare-use-in-vancouver/" class="u-url">What really affects bikeshare use in Vancouver?</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Mike Jarrett
-            </span></p>
-            <p class="dateline">
-            <a href="what-really-affects-bikeshare-use-in-vancouver/" rel="bookmark">
-            <time class="published dt-published" datetime="2017-11-21T23:32:26-08:00" itemprop="datePublished" title="2017-11-21 23:32">2017-11-21 23:32</time></a>
-            </p>
-                <p class="commentline">
-        
-    <a href="what-really-affects-bikeshare-use-in-vancouver/#disqus_thread" data-disqus-identifier="cache/posts/what-really-affects-bikeshare-use-in-vancouver.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="p-summary entry-summary">
-    <div>
-<p></p>
-<p>City staff recently reported to Council about the status of the Mobi bikeshare system. You can see the slideshow for yourself <a href="http://council.vancouver.ca/20171115/documents/cfsc3presentation.pdf">here</a>. Results generally look positive for the future of bikeshare in Vancouver, but a comment one slide stuck out for me: "Temperature influences ridership more than precipitation".</p>
-<p>Is this really true? In my experience, biking on a cool, dry day is much more enjoyable than biking on a warm rainy day. There was no clue in the council report on how they came to this conclusion, but I suspect they used the eyeball test. But the cooler months in Vancouver are also the rainy months, so a more careful analysis is needed. I'd recently seen an example in Jake Vanderplas' <a href="https://github.com/jakevdp/PythonDataScienceHandbook">Python Data Science Handbook</a> that looked at the factors influencing bike ridership in Seattle, so I decided to do a similar thing for Vancouver.</p>
-<!--more-->
-
-<p>I've described at bit more about how I collected the Mobi trip data in a <a href="http://mikejarrett.ca/blog/2017/10/machine-learning-with-vancouver-bike-share-data/">previous post</a>. While the data is unofficial and has some clear sources of error, it should be reliable to look at usage trends. For weather data, I wrote a small scraper to grab historical Vancouver weather from weather.gc.ca. All the code I used for this post is available on <a href="https://github.com/mjarrett/mobi">my github page</a>.</p>
-<p>First, let's take a zoomed out look at bike usage from late April to early November 2017. Rainfall and daily highs are plotted on the same scale, in degrees Celcius and millimeters of rain. Weekends are highlighted by grey bars. The first thing we see is the obvious broad trend across the seasons, matching up with the temperature trend. This is probably what city staff noticed. Next, we see that on days with sharp drop-offs from the broader trend, there's almost always some rainfall. So far so good!</p>
-<p><img class="alignnone size-full wp-image-255" src="http://mikejarrett.ca/blog/wp-content/uploads/weather_plot_2017-04-20-2017-11-03.png" alt="" width="640" height="480"></p>
-<p>(Days with missing data are days I had computer downtime before I moved my scraper to a cloud server.)</p>
-<p>A few things to note. Weather data is per day, and for just one Vancouver weather station. There are certainly days where it pours overnight and the day is clear, or it rains more in one part of the city than another. That said, let's take a closer look at a few weeks.</p>
-<p><img class="alignnone size-full wp-image-253" src="http://mikejarrett.ca/blog/wp-content/uploads/weather_plot_2017-06-02-2017-06-21.png" alt="" width="640" height="480"></p>
-<p>Here's two consecutive weekends where there was substantial rain on Sunday but none on Saturday. The drop-off is clear on both weekends. But later in the second week, there is a day with much less rainfall that has almost the same drop-off in number of trips.</p>
-<p><img class="alignnone size-full wp-image-254" src="http://mikejarrett.ca/blog/wp-content/uploads/weather_plot_2017-09-01-2017-09-21.png" alt="" width="640" height="480"></p>
-<p>Here's another three week stretch. Again, days with rain clearly show reduced Mobi usage. But usage also follows the temperature line! How much of the variation in bike usage is due to temperature, and how much is due to rain?</p>
-<p>First let's look at temperature and rainfall separately.</p>
-<p><img class="alignnone size-full wp-image-269" src="http://mikejarrett.ca/blog/wp-content/uploads/trips_vs_temp-1.png" alt="" width="640" height="480"></p>
-<p>The relationship between temperature and bike share trips is strong and exactly what you'd expect. More people ride on warm days! I've coloured the data by rainfall to see if there's any interesting outliers, but the rainy days are all well within the trend. We had pretty great weather all summer this year, so no examples of really rainy days with warm temperatures.</p>
-<p><img class="alignnone size-full wp-image-235" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/trips_vs_rainfall.png" alt="" width="640" height="480"></p>
-<p>Rainfall also shows a clear relationship with daily trips. But it's not linear like temperature. There's a band of zero rain days that correlate with temperature, then a linear segment as ridership falls off with increased rainfall, then ridership hits a baseline below which it doesn't decrease. Apparently regardless of the amount of rain there's something like 600-800 users who will take out a bike no matter what. Cool!</p>
-<p>So, we need to make a model that incorporates both temperature and rainfall to try to separate their effects. But to be as accurate as possible, we should include any other prominent factors. I showed in a earlier post that over the course of a day, weekdays and weekends show different ridership patters. But it turns out there's no obvious difference in the total number of trips.</p>
-<p><img class="alignnone size-full wp-image-241" style="font-size: 1rem;" src="http://mikejarrett.ca/blog/wp-content/uploads/weekdays_vs_weekends_boxplot-1.png" alt="" width="640" height="480"></p>
-<p>If we're going to think about weekday vs weekend, let's just include each day of the week as a separate factor. Stat holiday vs not holiday should also be included. Since there's such a dramatic difference between days with any rain and days with no rain, let's include "dry" days as a factor. The last factor I'll include is hours of daylight -- when it gets dark before 5pm, it's hard to say whether it's the temperature or the darkness that has more on an effect someone's decision to ride a Mobi.</p>
-<p><code>Trips ~ Temperature + Rainfall + Dry + Holiday + Daylight + Monday + Tuesday + Wednesday + Thursday + Friday + Saturday + Sunday</code></p>
-<p>To fit the model, I'll use the OLS (ordinary least squares) class from the statsmodels Python package.
-</p>
-<pre>                            OLS Regression Results                          <br>
-==============================================================================
-Dep. Variable:                  Trips       R-squared:                       0.812
-Model:                            OLS          Adj. R-squared:                  0.801
-Method:                 Least Squares  F-statistic:                     69.65
-Date:                Tue, 21 Nov 2017   Prob (F-statistic):           2.49e-58
-Time:                        13:57:32           Log-Likelihood:                -1376.9
-No. Observations:                 189    AIC:                             2778.
-Df Residuals:                     177          BIC:                             2817.
-Df Model:                          11                                       <br>
-Covariance Type:            nonrobust                                       <br>
-================================================================================
-                                    coef    std err          t      P&gt;|t|      [0.025      0.975]
-<hr><p>Max Temp           117.3302      8.079     14.522      0.000     101.386     133.274
-Total Rainmm   -29.8730      6.715     -4.449      0.000     -43.124     -16.622
-Mon                     -523.1535    209.4     -2.498      0.013    -936.401    -109.906
-Tue                      -523.9437    206.4     -2.537      0.012    -931.439    -116.448
-Wed                    -497.6093    209.4     -2.376      0.019    -910.967     -84.252
-Thu                     -429.2738    213.2     -2.013      0.046    -850.082      -8.465
-Fri                       -368.8536    207.5     -1.777      0.077    -778.440      40.733
-Sat                       -487.4666    206.5     -2.360      0.019    -895.072     -79.861
-Sun                      -755.6349    207.6     -3.640      0.000   -1165.364    -345.906
-Dry                      362.8911     75.665      4.796      0.000     213.569     512.214
-Holiday               -277.1649    181.6     -1.526      0.129    -635.701      81.371
-daylight_hrs       37.2471       15.672      2.377      0.019       6.319      68.175
-==============================================================================
-Omnibus:                        9.879   Durbin-Watson:                 1.087
-Prob(Omnibus):             0.007   Jarque-Bera (JB):               20.264
-Skew:                                0.116   Prob(JB):                             3.98e-05
-Kurtosis:                          4.587   Cond. No.                            472.
-==============================================================================</p>
-<p></p></pre>
-We can take a few things away from this table. The adjusted R<sup>2 </sup>value is 0.801 which means our model explains about 80% of the variance in the data. Pretty good! We can also say that, all other things being equal, there will be
-<ul>
-<li>117 more trips for each increase of one degree Celcius</li>
-    <li>30 fewer trips for each additional of 1 mm of rain</li>
-    <li>277 fewer trips on holidays versus equivalent non-holidays</li>
-    <li>37 more trips for each additional hour of daylight</li>
-</ul>
-The coefficients associated with the days of the week can be interpreted as the intercept for each day of the week, in other words the number of trips expected on that day if all other factors are zero. This is obviously nonsense, since we can't have fewer than zero trips. But the daily high temperature for the dates I have data for are all well above zero, so the model doesn't have any data for temperatures near zero. More on this later.
-<p>Given our model, we can plot the expected number of trips for each day on top of the measured number of trip.</p>
-<p><img class="alignnone size-full wp-image-248" src="http://mikejarrett.ca/blog/wp-content/uploads/trip_vs_predicted_full_model.png" alt="" width="640" height="480"></p>
-<p>The model nails the macroscopic structure, driven by temperature and daylight, and does pretty well with the day-to-day variations which are probably more driven by rainfall and the day of the week.</p>
-<p>There's a few big misses, though. Let's look at the days where our model misses the mark by over 1000 trips:</p>
-<p>On July 11th, a Tuesday, our model expects a normal summer day but the counted number of trips drops of precipitously. The weather data for that says 20 degrees and no rain, so I'm not sure what's going on. I've looked at my source data and don't see anything out of the ordinary, but I suspect there was a data acquisition issue that day.</p>
-<p>On August 12th, a Saturday, the model understates the number of riders by a large margin. There was 0.2 mm of rain measured on this day, so the model is treating it as a rainy day, but perhaps it only rained a bit overnight and was clear the rest of the day.</p>
-<p>Finally, on October 12th, a Thursday, the model again undercounts the number of trips, only expecting ~200 trips when in reality there over a thousand! There was 35 mm of rain measured that day, so even though the model expects the number of trips to keep decreasing linearly with rain, in practice if someone is going to bike in 20 mm of rain they're probably also going to bike in 30 mm of rain. Our model doesn't account for this.</p>
-<p>There's some other potentially nonlinear effects that we're not including here. During the winter in Vancouver, the coldest days are often clear and sunny. I wonder if as we get into December and January, the temperature trend might reverse and we'll see more trips on the coldest days. If that's the case, we may need a more complex model to really describe how weather affects bike share users.</p>
-<p><em>All the source code used for data acquisition and analysis in this post is available on my <a href="https://github.com/mjarrett/mobi">github page</a>.</em></p>
-<p><em>To see more posts like this, follow me on twitter <a href="https://twitter.com/MikeJarrett_">@MikeJarrett_</a>.</em></p>
-</div>
-    </div>
-    </article>
-</div>
-
-        <nav class="postindexpager"><ul class="pager">
-<li class="next">
-                <a href="index-1.html" rel="next">Older posts</a>
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+<li class="previous">
+                <a href="../tracking-bikeshare-use-using-gbfs-feeds/" rel="prev" title="Tracking bikeshare use using GBFS feeds">Previous post</a>
             </li>
-        </ul></nav><script>var disqus_shortname="mikejarrett";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="mikejarrett",
+            disqus_url="https://notes.mikejarrett.ca/mobi-station-networks/",
+        disqus_title="Mobi Station Networks",
+        disqus_identifier="cache/posts/mobi-station-networks.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha256-SDRP1VVYu+tgAGKhddBSl5+ezofHKZeI+OzxakbIe/Y=" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
-        </script>
+        </script></article><script>var disqus_shortname="mikejarrett";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 </div>
         <!--End of body content-->
 
@@ -3663,7 +3401,7 @@ The coefficients associated with the days of the week can be interpreted as the 
 </div>
 
 
-            <script src="assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
+            <script src="../assets/js/all-nocdn.js"></script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates --><script>

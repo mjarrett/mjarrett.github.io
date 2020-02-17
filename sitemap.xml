@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://notes.mikejarrett.ca/</loc>
-  <lastmod>2020-01-20T01:13:00Z</lastmod>
+  <lastmod>2020-02-17T19:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/140/</loc>
@@ -43,7 +43,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/archive.html</loc>
-  <lastmod>2020-02-14T19:59:00Z</lastmod>
+  <lastmod>2020-02-17T19:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/bootstrap-demo/</loc>
@@ -139,7 +139,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/index-1.html</loc>
-  <lastmod>2020-02-14T19:59:00Z</lastmod>
+  <lastmod>2020-02-17T19:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/internals/</loc>
@@ -155,7 +155,7 @@
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/listings/hello.py.html</loc>
-  <lastmod>2020-02-14T19:59:00Z</lastmod>
+  <lastmod>2020-02-17T19:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/machine-learning-with-vancouver-bike-share-data/</loc>
@@ -176,6 +176,10 @@
  <url>
   <loc>https://notes.mikejarrett.ca/mobi-station-activity/</loc>
   <lastmod>2019-06-12T23:14:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://notes.mikejarrett.ca/mobi-station-networks/</loc>
+  <lastmod>2020-02-17T19:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://notes.mikejarrett.ca/mountain-view-cemetary-open-data/</loc>
