@@ -534,3 +534,4 @@
 'render_pages:output/mobi-station-networks/index.html', (3172352, 4486)
 'render_sources:output/mobi-station-networks/index.ipynb', (3189248, 275)
 'render_posts:cache/posts/mobi-station-networks.html', (3225088, 402)
+'scale_images:output/images/logo_large.png', (3225600, 222)

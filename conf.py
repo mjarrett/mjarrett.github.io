@@ -1224,7 +1224,7 @@ USE_CDN = False
 # Extra things you want in the pages HEAD tag. This will be added right
 # before </head>
 # (translatable)
-EXTRA_HEAD_DATA = """<meta property="og:image" content="https://data.mikejarrett.ca/images/logo.png">
+EXTRA_HEAD_DATA = """<meta property="og:image" content="/images/logo_large.png">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132843241-1"></script>
 <script>
